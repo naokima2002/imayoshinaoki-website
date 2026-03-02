@@ -59,7 +59,7 @@
         "addressCountry": "JP"
       },
       "sameAs": [
-        "https://www.facebook.com/naoki.imayoshi",
+        "https://www.facebook.com/naokima2002",
         "https://www.instagram.com/naoki_imayoshi"
       ]
     }
@@ -159,6 +159,25 @@
         .nav-cta:hover { background: var(--green-light); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(30,92,50,0.25); }
         .nav-cta::after { display: none; }
 
+        /* ── Dropdown nav ── */
+        .nav-has-dropdown { position: relative; }
+        .nav-dropdown-menu {
+            display: none; position: absolute; top: calc(100% + 10px); left: 50%;
+            transform: translateX(-50%);
+            background: #fff; border: 1px solid var(--border);
+            border-radius: 12px; padding: 6px 0; min-width: 190px;
+            box-shadow: 0 8px 32px rgba(30,92,50,0.15); z-index: 200; white-space: nowrap;
+        }
+        .nav-has-dropdown:hover .nav-dropdown-menu { display: block; }
+        .nav-dropdown-menu li { list-style: none; }
+        .nav-dropdown-menu a {
+            display: block; padding: 10px 18px;
+            font-size: 13px; color: var(--text); transition: background 0.15s;
+        }
+        .nav-dropdown-menu a:hover { background: var(--green-pale); color: var(--green); }
+        .nav-dropdown-menu a::after { display: none !important; }
+        .nav-dropdown-arrow { font-size: 9px; margin-left: 3px; }
+
         /* Hamburger */
         .hamburger {
             display: none; flex-direction: column; gap: 5px;
@@ -193,6 +212,13 @@
             content: '';
             position: absolute; inset: 0;
             background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        /* 半透明オーバーレイ（背景画像追加時に活用） */
+        #hero::after {
+            content: '';
+            position: absolute; inset: 0;
+            background: linear-gradient(180deg, rgba(22,63,36,0.30) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.18) 100%);
+            pointer-events: none; z-index: 0;
         }
         .hero-inner {
             position: relative; z-index: 1;
@@ -345,6 +371,15 @@
         .fc .fc-button-primary:hover { background: var(--green-light); border-color: var(--green-light); }
         .fc .fc-day-today { background: var(--green-pale) !important; }
         .fc .fc-event { background: var(--green); border-color: var(--green); font-size: 11px; }
+        /* 土日祝日赤文字 */
+        .fc .fc-col-header-cell.fc-day-sat a,
+        .fc .fc-col-header-cell.fc-day-sat span { color: var(--red) !important; }
+        .fc .fc-col-header-cell.fc-day-sun a,
+        .fc .fc-col-header-cell.fc-day-sun span { color: var(--red) !important; }
+        .fc .fc-day-sat .fc-daygrid-day-number { color: var(--red) !important; }
+        .fc .fc-day-sun .fc-daygrid-day-number { color: var(--red) !important; }
+        .fc .fc-day-sat.fc-day-holiday .fc-daygrid-day-number,
+        .fc .fc-day-holiday .fc-daygrid-day-number { color: var(--red) !important; }
 
         /* ── Topics ── */
         #topics { background: var(--white); }
@@ -589,7 +624,15 @@
                 <ul>
                     <li><a href="#kirishima-news">霧島情報</a></li>
                     <li><a href="events/">イベント</a></li>
-                    <li><a href="#facilities">施設</a></li>
+                    <li class="nav-has-dropdown">
+                        <a href="#facilities">施設<span class="nav-dropdown-arrow">▾</span></a>
+                        <ul class="nav-dropdown-menu">
+                            <li><a href="easy-rider/">🎸 イージーライダーハウス</a></li>
+                            <li><a href="kokubu-base/">🏢 こくぶベース</a></li>
+                            <li><a href="mizo-base/">🏠 みぞべーす</a></li>
+                            <li><a href="kirishimabito/">🌿 キリシマビト</a></li>
+                        </ul>
+                    </li>
                     <li><a href="topics/">トピックス</a></li>
                     <li><a href="#about">プロフィール</a></li>
                     <li><a href="contact/" class="nav-cta">お問い合わせ</a></li>
@@ -606,10 +649,13 @@
 <nav class="mobile-menu" id="mobileMenu" aria-label="モバイルナビゲーション">
     <a href="#kirishima-news">霧島情報</a>
     <a href="events/">イベントカレンダー</a>
-    <a href="#facilities">施設紹介</a>
+    <a href="#facilities" style="font-weight:700;">施設紹介</a>
+    <a href="easy-rider/" style="padding-left:24px;font-size:14px;">🎸 イージーライダーハウス</a>
+    <a href="kokubu-base/" style="padding-left:24px;font-size:14px;">🏢 こくぶベース</a>
+    <a href="mizo-base/" style="padding-left:24px;font-size:14px;">🏠 みぞべーす</a>
+    <a href="kirishimabito/" style="padding-left:24px;font-size:14px;">🌿 キリシマビト</a>
     <a href="topics/">トピックス</a>
     <a href="#about">今吉なおきについて</a>
-    <a href="#kirishimabito-banner">キリシマビト</a>
     <a href="contact/" class="nav-cta">お問い合わせ</a>
 </nav>
 
@@ -659,7 +705,7 @@
             </div>
             <div class="hero-visual" aria-hidden="true">
                 <div class="hero-card-stack">
-                    <div class="hero-card">
+                    <a href="topics/" style="display:block;text-decoration:none;" class="hero-card">
                         <div class="hero-card-title">🗾 今日の霧島市情報</div>
                         <ul class="hero-card-list">
                             <li>霧島市役所からのお知らせ</li>
@@ -667,11 +713,11 @@
                             <li>まいぷれの地域ニュース</li>
                             <li>今吉直樹のSNS投稿</li>
                         </ul>
-                    </div>
-                    <div class="hero-card hero-card-2">
+                    </a>
+                    <a href="events/" style="display:block;text-decoration:none;" class="hero-card hero-card-2">
                         <div class="hero-card-2-label">SCHEDULE</div>
                         <div class="hero-card-2-text">📅 今月のイベントを確認する →</div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -847,14 +893,14 @@
                     一人ひとりの夢から、<br>霧島の未来を作る
                 </h2>
                 <p class="banner-desc">
-                    「キリシマビト」は、霧島に関わるすべての人が主役になれるコミュニティプロジェクトです。
-                    キリシマビトを通じて、夢を持つ仲間をつなぎ、地域に新しい価値を生み出します。
+                    「キリシマビト」は、今吉直樹の屋号（個人ブランド名）です。
+                    霧島を拠点に、補助金支援・施設運営・地域づくり・情報発信などの活動を展開しています。
                 </p>
                 <div class="banner-pills">
-                    <span class="banner-pill">🌱 コミュニティ</span>
-                    <span class="banner-pill">💡 起業支援</span>
+                    <span class="banner-pill">🌱 屋号・個人ブランド</span>
+                    <span class="banner-pill">💡 補助金支援</span>
                     <span class="banner-pill">🤝 地域連携</span>
-                    <span class="banner-pill">🎯 夢実現</span>
+                    <span class="banner-pill">🎯 霧島の未来</span>
                 </div>
                 <a href="kirishimabito/" class="btn-gold">キリシマビトを詳しく見る →</a>
             </div>
@@ -862,7 +908,7 @@
                 <div class="banner-card">
                     <div class="banner-card-icon">🌿</div>
                     <div class="banner-card-title">キリシマビト</div>
-                    <div class="banner-card-sub">月会費 ¥3,000〜</div>
+                    <div class="banner-card-sub">今吉直樹の屋号</div>
                 </div>
                 <div class="banner-card">
                     <div class="banner-card-icon">🎸</div>
@@ -897,7 +943,7 @@
                 <div class="about-meta-name">今吉 直樹</div>
                 <div class="about-meta-title">ふるさとプロデューサー</div>
                 <div style="margin-top:16px; display:flex; flex-direction:column; gap:8px; align-items:center;">
-                    <a href="https://www.facebook.com/naoki.imayoshi" target="_blank" rel="noopener"
+                    <a href="https://www.facebook.com/naokima2002" target="_blank" rel="noopener"
                        style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#1877F2;font-weight:600;">
                         📘 Facebook
                     </a>
@@ -915,12 +961,12 @@
                     鹿児島県霧島市出身。霧島市役所に17年間勤務し、地域の現場を知り尽くした行政マン。
                     その後、霧島市議会議員を経て、株式会社FoodBaseを設立。
                     元市役所・議員の経験を活かした補助金コンサルティングは採択率90%超を誇り、
-                    累計3億円以上の補助金採択実績を持つ。
+                    累計30億円以上の補助金採択実績を持つ。
                 </p>
                 <p class="about-text">
-                    現在は「キリシマビト」として、霧島を拠点に地域課題解決・起業支援・コミュニティ形成に取り組む。
+                    現在は屋号「キリシマビト」として、霧島を拠点に地域課題解決・起業支援・情報発信に取り組む。
                     イージーライダーハウス（ライブハウス）・こくぶベース・みぞべーすの3施設を運営し、
-                    「キリシマビト」コミュニティを通じて霧島に関わる人たちをつないでいる。
+                    霧島に関わる人たちをつなぐ活動を続けている。
                 </p>
                 <div class="about-tags">
                     <span class="about-tag">元霧島市役所（17年）</span>
@@ -931,20 +977,20 @@
                 </div>
                 <div class="about-history">
                     <div class="history-item">
-                        <div class="history-year">〜2020</div>
-                        <div class="history-desc">霧島市役所に17年間勤務。農業振興・地域づくり・産業振興を担当</div>
+                        <div class="history-year">〜2021年3月</div>
+                        <div class="history-desc">霧島市役所に17年間勤務。農業振興・地域づくり・産業振興を担当。2021年3月退職。</div>
                     </div>
                     <div class="history-item">
                         <div class="history-year">2020</div>
                         <div class="history-desc">霧島市議会議員就任。市民目線で地域課題の解決に取り組む</div>
                     </div>
                     <div class="history-item">
-                        <div class="history-year">2022</div>
-                        <div class="history-desc">株式会社FoodBase設立。補助金申請サポート・経営コンサルを開始</div>
+                        <div class="history-year">2021年4月</div>
+                        <div class="history-desc">屋号「キリシマビト」を発足。霧島を拠点とする個人ブランドとして活動開始</div>
                     </div>
                     <div class="history-item">
-                        <div class="history-year">2025〜</div>
-                        <div class="history-desc">キリシマビトを発足。3施設の運営を開始</div>
+                        <div class="history-year">2022</div>
+                        <div class="history-desc">株式会社FoodBase設立。補助金申請サポート・経営コンサルを開始</div>
                     </div>
                 </div>
                 <div style="margin-top:24px;">
@@ -983,7 +1029,7 @@
                     元市役所職員・元市議会議員の今吉直樹が運営しています。
                 </p>
                 <div class="footer-sns">
-                    <a href="https://www.facebook.com/naoki.imayoshi" target="_blank" rel="noopener" aria-label="Facebook">📘</a>
+                    <a href="https://www.facebook.com/naokima2002" target="_blank" rel="noopener" aria-label="Facebook">📘</a>
                     <a href="https://www.instagram.com/naoki_imayoshi" target="_blank" rel="noopener" aria-label="Instagram">📷</a>
                 </div>
             </div>
@@ -1131,7 +1177,7 @@
             { source: 'kirinavi', date: '2026年3月2日',  title: 'きりなびのイベント情報（自動更新されます）', url: 'https://kirinavi.com/' },
             { source: 'mypl',     date: '2026年3月1日',  title: 'まいぷれ霧島の地域ニュース（自動更新されます）', url: 'https://kirishima.mypl.net/' },
             { source: 'city',     date: '2026年3月1日',  title: '霧島市役所 行政情報（自動更新されます）', url: 'https://www.city.kirishima.lg.jp/' },
-            { source: 'facebook', date: '2026年3月1日',  title: '今吉直樹のFacebook投稿（API連携後に自動掲載）', url: 'https://www.facebook.com/naoki.imayoshi' },
+            { source: 'facebook', date: '2026年3月1日',  title: '今吉直樹のFacebook投稿（API連携後に自動掲載）', url: 'https://www.facebook.com/naokima2002' },
             { source: 'instagram',date: '2026年2月28日', title: '今吉直樹のInstagram投稿（API連携後に自動掲載）', url: 'https://www.instagram.com/naoki_imayoshi' },
         ];
         return samples.map(s => `
@@ -1208,6 +1254,21 @@
         renderTopics(filter);
     }
 
+    // ══ 祝日一覧 ══
+    const JP_HOLIDAYS = new Set([
+        '2025-01-01','2025-01-13','2025-02-11','2025-02-23','2025-02-24',
+        '2025-03-20','2025-04-29','2025-05-03','2025-05-04','2025-05-05','2025-05-06',
+        '2025-07-21','2025-08-11','2025-09-15','2025-09-23','2025-10-13',
+        '2025-11-03','2025-11-23','2025-11-24',
+        '2026-01-01','2026-01-12','2026-02-11','2026-02-23',
+        '2026-03-20','2026-04-29','2026-05-03','2026-05-04','2026-05-05',
+        '2026-07-20','2026-08-11','2026-09-21','2026-09-23','2026-10-12',
+        '2026-11-03','2026-11-23',
+    ]);
+    function toDateStr(d) {
+        return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+    }
+
     // ══ FullCalendar ══
     function initCalendar(events) {
         const el = document.getElementById('miniCalendar');
@@ -1225,6 +1286,10 @@
                 } else {
                     window.location.href = 'events/';
                 }
+            },
+            dayCellClassNames: (arg) => {
+                const s = toDateStr(arg.date);
+                return JP_HOLIDAYS.has(s) ? ['fc-day-holiday'] : [];
             },
             eventColor: '#1E5C32',
         }).render();

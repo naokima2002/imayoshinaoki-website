@@ -49,6 +49,15 @@
         .nav-cta { background:var(--green); color:#fff !important; padding:9px 20px; border-radius:50px; font-size:13px; font-weight:700; transition:all 0.3s; }
         .nav-cta:hover { background:var(--green-light); }
         .nav-cta::after { display:none; }
+        /* Dropdown */
+        .nav-has-dropdown { position:relative; }
+        .nav-dropdown-menu { display:none; position:absolute; top:calc(100% + 10px); left:50%; transform:translateX(-50%); background:#fff; border:1px solid var(--border); border-radius:12px; padding:6px 0; min-width:190px; box-shadow:0 8px 32px rgba(30,92,50,0.15); z-index:200; white-space:nowrap; }
+        .nav-has-dropdown:hover .nav-dropdown-menu { display:block; }
+        .nav-dropdown-menu li { list-style:none; }
+        .nav-dropdown-menu a { display:block; padding:10px 18px; font-size:13px; color:var(--text); transition:background 0.15s; }
+        .nav-dropdown-menu a:hover { background:var(--green-pale); color:var(--green); }
+        .nav-dropdown-menu a::after { display:none !important; }
+        .nav-dropdown-arrow { font-size:9px; margin-left:3px; }
         .hamburger { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:6px; }
         .hamburger span { display:block; width:24px; height:2px; background:var(--dark); transition:all 0.3s; border-radius:2px; }
         .hamburger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
@@ -164,7 +173,15 @@
             <nav><ul>
                 <li><a href="../#kirishima-news">霧島情報</a></li>
                 <li><a href="../events/">イベント</a></li>
-                <li><a href="../#facilities">施設</a></li>
+                <li class="nav-has-dropdown">
+                    <a href="../#facilities">施設<span class="nav-dropdown-arrow">▾</span></a>
+                    <ul class="nav-dropdown-menu">
+                        <li><a href="../easy-rider/">🎸 イージーライダーハウス</a></li>
+                        <li><a href="../kokubu-base/">🏢 こくぶベース</a></li>
+                        <li><a href="../mizo-base/">🏠 みぞべーす</a></li>
+                        <li><a href="../kirishimabito/" style="color:var(--green);font-weight:700;">🌿 キリシマビト</a></li>
+                    </ul>
+                </li>
                 <li><a href="../topics/">トピックス</a></li>
                 <li><a href="../about/">プロフィール</a></li>
                 <li><a href="../contact/" class="nav-cta">お問い合わせ</a></li>
@@ -183,14 +200,14 @@
 <section class="page-hero" aria-labelledby="hero-title">
     <div class="container">
         <div class="hero-content">
-            <div class="hero-badge">✨ 霧島のコミュニティプロジェクト</div>
+            <div class="hero-badge">🌿 今吉直樹の屋号・個人ブランド</div>
             <p class="page-label">Kirishimabito</p>
             <h1 class="page-title" id="hero-title">
                 <em>キリシマビト</em><br>として<br>霧島を動かす
             </h1>
             <p class="page-desc">
-                一人ひとりの夢から、霧島の未来を作る。<br>
-                霧島に関わるすべての人が主役になれる<br>コミュニティプロジェクト。
+                「キリシマビト」は今吉直樹の屋号（個人ブランド名）です。<br>
+                霧島を拠点に、補助金支援・施設運営・地域づくり・情報発信を展開。
             </p>
             <div class="hero-btns">
                 <a href="https://kirishimabitospace.hp.peraichi.com" target="_blank" rel="noopener" class="btn-gold">
@@ -208,7 +225,7 @@
         <div class="fade-up">
             <p class="section-label">Philosophy</p>
             <h2 class="section-title">キリシマビトの想い</h2>
-            <p class="section-desc">霧島に生まれ、霧島を愛し、霧島のために動く。それがキリシマビトです。</p>
+            <p class="section-desc">「キリシマビト」は今吉直樹の屋号。霧島に生まれ、霧島を愛し、霧島のために動く。それがキリシマビトの想いです。</p>
         </div>
         <div class="philosophy-grid">
             <div class="philosophy-card fade-up">
@@ -238,20 +255,19 @@
                 <p class="section-label">About</p>
                 <h2 class="section-title">キリシマビトとは</h2>
                 <p class="about-text">
-                    「キリシマビト」は、今吉直樹が立ち上げた霧島市を拠点とするコミュニティプロジェクトです。
-                    霧島に住む人・働く人・関わるすべての人が主役となり、
-                    それぞれの夢や目標を実現するための場所と機会を提供しています。
+                    「キリシマビト」は、今吉直樹の屋号（個人ブランド名）です。2021年4月に発足。
+                    霧島市を拠点に、補助金コンサルティング・施設運営・地域づくり・情報発信など
+                    多方面の活動をこの屋号のもとで展開しています。
                 </p>
                 <p class="about-text">
-                    「キリシマビト」という月会費制のコミュニティでは、定期的な交流会・勉強会・
-                    イベントを開催し、メンバー同士がビジネスや活動でつながれる仕組みを作っています。
-                    元市役所職員・元市議会議員としての行政経験を活かし、
-                    補助金活用・地域課題解決のサポートも行っています。
+                    元霧島市役所職員（17年）・元霧島市議会議員としての行政経験を活かし、
+                    地域課題の解決・起業支援・補助金活用サポートに取り組んでいます。
+                    イージーライダーハウス・こくぶベース・みぞべーすの3施設も運営。
                 </p>
                 <div class="about-tags">
-                    <span class="about-tag">キリシマビト</span>
+                    <span class="about-tag">今吉直樹の屋号</span>
+                    <span class="about-tag">2021年4月発足</span>
                     <span class="about-tag">霧島市</span>
-                    <span class="about-tag">コミュニティ</span>
                     <span class="about-tag">起業支援</span>
                     <span class="about-tag">補助金</span>
                 </div>
@@ -328,8 +344,8 @@
                     キリシマビトに<br>参加しませんか？
                 </h2>
                 <p class="join-desc">
-                    霧島で夢を持つすべての人に開かれたコミュニティ「キリシマビト」。
-                    月会費で様々なサポートを受けながら、仲間と一緒に夢を実現しましょう。
+                    屋号「キリシマビト」のもとで展開する活動に参加しませんか。
+                    様々なサポートを受けながら、霧島で一緒に夢を実現しましょう。
                 </p>
                 <p class="join-desc">
                     農業・飲食・IT・福祉・観光・アート…業種は問いません。
@@ -344,13 +360,13 @@
                 <div class="join-plan">
                     <div class="join-plan-name">スタンダード</div>
                     <div class="join-plan-price">¥3,000</div>
-                    <div class="join-plan-unit">/ 月（税込）</div>
-                    <div class="join-plan-desc">月次定例会参加・コミュニティ参加・情報共有</div>
+                    <div class="join-plan-unit">（税込）</div>
+                    <div class="join-plan-desc">定例会参加・活動参加・情報共有</div>
                 </div>
                 <div class="join-plan">
                     <div class="join-plan-name">プレミアム</div>
                     <div class="join-plan-price">¥5,000</div>
-                    <div class="join-plan-unit">/ 月（税込）</div>
+                    <div class="join-plan-unit">（税込）</div>
                     <div class="join-plan-desc">スタンダード特典＋施設利用割引・補助金個別相談</div>
                 </div>
                 <div class="join-plan" style="grid-column:1/-1;">

@@ -68,6 +68,23 @@
         .nav-cta { background: var(--green); color: #fff !important; padding: 9px 20px; border-radius: 50px; font-size: 13px; font-weight: 700; transition: all 0.3s; }
         .nav-cta:hover { background: var(--green-light); }
         .nav-cta::after { display: none; }
+        /* Dropdown */
+        .nav-has-dropdown { position: relative; }
+        .nav-dropdown-menu { display: none; position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%); background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 6px 0; min-width: 190px; box-shadow: 0 8px 32px rgba(30,92,50,0.15); z-index: 200; white-space: nowrap; }
+        .nav-has-dropdown:hover .nav-dropdown-menu { display: block; }
+        .nav-dropdown-menu li { list-style: none; }
+        .nav-dropdown-menu a { display: block; padding: 10px 18px; font-size: 13px; color: var(--text); transition: background 0.15s; }
+        .nav-dropdown-menu a:hover { background: var(--green-pale); color: var(--green); }
+        .nav-dropdown-menu a::after { display: none !important; }
+        .nav-dropdown-arrow { font-size: 9px; margin-left: 3px; }
+        /* 土日赤文字 */
+        .fc .fc-col-header-cell.fc-day-sat a,
+        .fc .fc-col-header-cell.fc-day-sat span { color: var(--red) !important; }
+        .fc .fc-col-header-cell.fc-day-sun a,
+        .fc .fc-col-header-cell.fc-day-sun span { color: var(--red) !important; }
+        .fc .fc-day-sat .fc-daygrid-day-number,
+        .fc .fc-day-sun .fc-daygrid-day-number { color: var(--red) !important; }
+        .fc .fc-day-holiday .fc-daygrid-day-number { color: var(--red) !important; }
         .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 6px; }
         .hamburger span { display: block; width: 24px; height: 2px; background: var(--dark); transition: all 0.3s; border-radius: 2px; }
         .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
@@ -208,7 +225,15 @@
                 <ul>
                     <li><a href="../#kirishima-news">霧島情報</a></li>
                     <li><a href="../events/" aria-current="page" style="color:var(--green)">イベント</a></li>
-                    <li><a href="../#facilities">施設</a></li>
+                    <li class="nav-has-dropdown">
+                        <a href="../#facilities">施設<span class="nav-dropdown-arrow">▾</span></a>
+                        <ul class="nav-dropdown-menu">
+                            <li><a href="../easy-rider/">🎸 イージーライダーハウス</a></li>
+                            <li><a href="../kokubu-base/">🏢 こくぶベース</a></li>
+                            <li><a href="../mizo-base/">🏠 みぞべーす</a></li>
+                            <li><a href="../kirishimabito/">🌿 キリシマビト</a></li>
+                        </ul>
+                    </li>
                     <li><a href="../topics/">トピックス</a></li>
                     <li><a href="../about/">プロフィール</a></li>
                     <li><a href="../contact/" class="nav-cta">お問い合わせ</a></li>
@@ -449,6 +474,21 @@
         `).join('');
     }
 
+    // 日本の祝日一覧（2025〜2026）
+    const JP_HOLIDAYS = new Set([
+        '2025-01-01','2025-01-13','2025-02-11','2025-02-23','2025-02-24',
+        '2025-03-20','2025-04-29','2025-05-03','2025-05-04','2025-05-05','2025-05-06',
+        '2025-07-21','2025-08-11','2025-09-15','2025-09-23','2025-10-13',
+        '2025-11-03','2025-11-23','2025-11-24',
+        '2026-01-01','2026-01-12','2026-02-11','2026-02-23',
+        '2026-03-20','2026-04-29','2026-05-03','2026-05-04','2026-05-05',
+        '2026-07-20','2026-08-11','2026-09-21','2026-09-23','2026-10-12',
+        '2026-11-03','2026-11-23',
+    ]);
+    function toDateStr(d) {
+        return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+    }
+
     function initFullCalendar(events) {
         const el = document.getElementById('fullCalendar');
         const fcEvents = events.map(e => ({
@@ -469,6 +509,10 @@
                 if (info.event.url) {
                     window.location.href = info.event.url;
                 }
+            },
+            dayCellClassNames: (arg) => {
+                const s = toDateStr(arg.date);
+                return JP_HOLIDAYS.has(s) ? ['fc-day-holiday'] : [];
             },
             dayMaxEvents: 3,
             moreLinkContent: (args) => `+${args.num}件`,

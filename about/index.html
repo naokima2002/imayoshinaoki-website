@@ -28,7 +28,7 @@
       "description": "元霧島市役所職員（17年）・元霧島市議会議員。株式会社FoodBase代表。霧島市を拠点に補助金コンサルティング・地域課題解決・コミュニティ形成に取り組む。",
       "worksFor": [{"@type":"Organization","name":"株式会社FoodBase"},{"@type":"Organization","name":"キリシマビト"}],
       "address": {"@type":"PostalAddress","addressLocality":"霧島市","addressRegion":"鹿児島県","addressCountry":"JP"},
-      "sameAs": ["https://www.facebook.com/naoki.imayoshi","https://www.instagram.com/naoki_imayoshi"]
+      "sameAs": ["https://www.facebook.com/naokima2002","https://www.instagram.com/naoki_imayoshi"]
     }
     </script>
     <style>
@@ -63,6 +63,15 @@
         .nav-cta { background:var(--green); color:#fff !important; padding:9px 20px; border-radius:50px; font-size:13px; font-weight:700; }
         .nav-cta:hover { background:var(--green-light); }
         .nav-cta::after { display:none; }
+        /* Dropdown */
+        .nav-has-dropdown { position:relative; }
+        .nav-dropdown-menu { display:none; position:absolute; top:calc(100% + 10px); left:50%; transform:translateX(-50%); background:#fff; border:1px solid var(--border); border-radius:12px; padding:6px 0; min-width:190px; box-shadow:0 8px 32px rgba(30,92,50,0.15); z-index:200; white-space:nowrap; }
+        .nav-has-dropdown:hover .nav-dropdown-menu { display:block; }
+        .nav-dropdown-menu li { list-style:none; }
+        .nav-dropdown-menu a { display:block; padding:10px 18px; font-size:13px; color:var(--text); transition:background 0.15s; }
+        .nav-dropdown-menu a:hover { background:var(--green-pale); color:var(--green); }
+        .nav-dropdown-menu a::after { display:none !important; }
+        .nav-dropdown-arrow { font-size:9px; margin-left:3px; }
         .hamburger { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:6px; }
         .hamburger span { display:block; width:24px; height:2px; background:var(--dark); transition:all 0.3s; border-radius:2px; }
         .hamburger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
@@ -166,7 +175,15 @@
             <nav><ul>
                 <li><a href="../#kirishima-news">霧島情報</a></li>
                 <li><a href="../events/">イベント</a></li>
-                <li><a href="../#facilities">施設</a></li>
+                <li class="nav-has-dropdown">
+                    <a href="../#facilities">施設<span class="nav-dropdown-arrow">▾</span></a>
+                    <ul class="nav-dropdown-menu">
+                        <li><a href="../easy-rider/">🎸 イージーライダーハウス</a></li>
+                        <li><a href="../kokubu-base/">🏢 こくぶベース</a></li>
+                        <li><a href="../mizo-base/">🏠 みぞべーす</a></li>
+                        <li><a href="../kirishimabito/">🌿 キリシマビト</a></li>
+                    </ul>
+                </li>
                 <li><a href="../topics/">トピックス</a></li>
                 <li><a href="../about/" style="color:var(--green)" aria-current="page">プロフィール</a></li>
                 <li><a href="../contact/" class="nav-cta">お問い合わせ</a></li>
@@ -210,13 +227,13 @@
                             「市民の目線で動ける行政マン」として地域に向き合い続けた。
                         </p>
                         <p class="profile-text">
-                            退職後、霧島市議会議員に就任。市民目線で霧島の課題解決に取り組んだ後、
+                            2021年3月に市役所を退職後、霧島市議会議員に就任。市民目線で霧島の課題解決に取り組んだ後、
                             株式会社FoodBaseを設立し、補助金コンサルティングを開始。
-                            採択率90%超・累計3億円以上の実績を誇る。
+                            採択率90%超・累計30億円以上の実績を誇る。
                         </p>
                         <p class="profile-text">
-                            現在は「キリシマビト」「キリシマビト」を通じてコミュニティ形成に取り組み、
-                            イージーライダーハウス・こくぶベース・みぞべーすの3施設を運営。
+                            屋号「キリシマビト」のもと、霧島を拠点に地域課題解決・起業支援・情報発信に取り組む。
+                            イージーライダーハウス・こくぶベース・みぞべーすの3施設を運営し、
                             「霧島の今と未来をつなぐ」をミッションに活動している。
                         </p>
                         <div class="tag-wrap">
@@ -228,7 +245,7 @@
                             <span class="tag">キリシマビト</span>
                         </div>
                         <div class="sns-row">
-                            <a href="https://www.facebook.com/naoki.imayoshi" target="_blank" rel="noopener" class="sns-btn sns-fb">📘 Facebook</a>
+                            <a href="https://www.facebook.com/naokima2002" target="_blank" rel="noopener" class="sns-btn sns-fb">📘 Facebook</a>
                             <a href="https://www.instagram.com/naoki_imayoshi" target="_blank" rel="noopener" class="sns-btn sns-ig">📷 Instagram</a>
                         </div>
                     </div>
@@ -237,9 +254,9 @@
                             <tr><td>氏名</td><td>今吉 直樹（今吉なおき）</td></tr>
                             <tr><td>出身・在住</td><td>鹿児島県 霧島市</td></tr>
                             <tr><td>肩書き</td><td>ふるさとプロデューサー</td></tr>
-                            <tr><td>所属</td><td>株式会社FoodBase 代表取締役<br>キリシマビト 代表<br>キリシマビト 主宰</td></tr>
-                            <tr><td>得意分野</td><td>補助金申請・地域づくり<br>コミュニティ形成・起業支援</td></tr>
-                            <tr><td>実績</td><td>採択率90%超<br>累計補助金採択額 3億円以上</td></tr>
+                            <tr><td>所属</td><td>株式会社FoodBase 代表取締役<br>キリシマビト（屋号）</td></tr>
+                            <tr><td>得意分野</td><td>補助金申請・地域づくり<br>施設運営・起業支援・情報発信</td></tr>
+                            <tr><td>実績</td><td>採択率90%超<br>累計補助金採択額 30億円以上</td></tr>
                         </table>
                     </div>
                 </div>
@@ -257,29 +274,29 @@
         </div>
         <div class="timeline fade-up">
             <div class="timeline-item">
-                <div class="timeline-year">〜2003</div>
-                <div class="timeline-title">霧島市役所 入庁</div>
-                <div class="timeline-desc">鹿児島県霧島市役所に入庁。農業振興課・産業政策課・地域づくり推進課などを歴任。17年間、市民の現場に寄り添った行政マンとして活動。</div>
+                <div class="timeline-year">〜2021年3月</div>
+                <div class="timeline-title">霧島市役所 勤務（17年間）</div>
+                <div class="timeline-desc">鹿児島県霧島市役所に入庁。農業振興課・産業政策課・地域づくり推進課などを歴任。17年間、市民の現場に寄り添った行政マンとして活動。2021年3月退職。</div>
             </div>
             <div class="timeline-item">
                 <div class="timeline-year">2020</div>
                 <div class="timeline-title">霧島市議会議員 就任</div>
-                <div class="timeline-desc">市役所退職後、霧島市議会議員に就任。行政経験を活かし、市民目線で霧島の課題解決に取り組む。農業・産業・福祉・地域づくりの政策提言。</div>
+                <div class="timeline-desc">霧島市議会議員に就任。行政経験を活かし、市民目線で霧島の課題解決に取り組む。農業・産業・福祉・地域づくりの政策提言。</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">2021年4月</div>
+                <div class="timeline-title">キリシマビト（屋号）発足</div>
+                <div class="timeline-desc">個人ブランド・屋号として「キリシマビト」を発足。霧島を拠点とする地域づくり・情報発信・補助金支援活動を本格始動。</div>
             </div>
             <div class="timeline-item">
                 <div class="timeline-year">2022</div>
                 <div class="timeline-title">株式会社FoodBase 設立</div>
-                <div class="timeline-desc">補助金コンサルティング会社を設立。元市役所・議員の行政経験を活かした補助金申請サポートを開始。採択率90%超・累計3億円以上の実績。全国対応。</div>
+                <div class="timeline-desc">補助金コンサルティング会社を設立。元市役所・議員の行政経験を活かした補助金申請サポートを開始。採択率90%超・累計30億円以上の実績。全国対応。</div>
             </div>
             <div class="timeline-item">
                 <div class="timeline-year">2024</div>
                 <div class="timeline-title">イージーライダーハウス 事業継承</div>
-                <div class="timeline-desc">霧島市唯一のライブハウス・小劇場「イージーライダーハウス」の経営を引き継ぐ。霧島の音楽・文化の拠点として再生・活性化に取り組む。</div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-year">2025</div>
-                <div class="timeline-title">キリシマビト・キリシマビト 発足</div>
-                <div class="timeline-desc">霧島を拠点とするコミュニティプロジェクト「キリシマビト」と月会費制コミュニティ「キリシマビト」を発足。こくぶベース・みぞべーすの運営も開始。</div>
+                <div class="timeline-desc">霧島市唯一のライブハウス・小劇場「イージーライダーハウス」の経営を引き継ぐ。霧島の音楽・文化の拠点として再生・活性化に取り組む。こくぶベース・みぞべーすの運営も開始。</div>
             </div>
             <div class="timeline-item">
                 <div class="timeline-year">現在</div>
