@@ -641,8 +641,9 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 32px;
+            padding: 0;
             border: 1px solid var(--border);
+            overflow: hidden;
         }
         .access-map-icon { font-size: 48px; margin-bottom: 12px; }
         .access-map-text {
@@ -824,7 +825,7 @@
                 <span class="section-label">About</span>
                 <h2 class="section-title">霧島の音楽・文化・コミュニティの拠点</h2>
                 <p class="section-lead">
-                    15年以上の歴史を持つ霧島市唯一のライブハウス・小劇場。今吉直樹が事業継承し、霧島の音楽・文化・コミュニティの拠点として運営しています。音楽ライブから講演会、演劇、ワークショップまで幅広いイベントに対応します。
+                    約20年の歴史を持つ霧島市唯一のライブハウス・小劇場。今吉直樹が事業継承し、霧島の音楽・文化・コミュニティの拠点として運営しています。音楽ライブから講演会、演劇、ワークショップまで幅広いイベントに対応します。
                 </p>
                 <div class="features-grid">
                     <div class="feature-item">
@@ -851,8 +852,8 @@
                     <div class="feature-item">
                         <div class="feature-icon">🚗</div>
                         <div class="feature-text">
-                            <strong>駐車場あり</strong>
-                            <span>お車でのアクセスも安心</span>
+                            <strong>駐車場は無し</strong>
+                            <span>公共交通機関のご利用をお願いします</span>
                         </div>
                     </div>
                 </div>
@@ -906,6 +907,7 @@
         <span class="section-label">Pricing</span>
         <h2 class="section-title">利用料金</h2>
         <div class="pricing-wrap">
+            <h3 style="font-size:18px; font-weight:700; color:var(--dark); margin-bottom:24px; margin-top:32px;">通常利用</h3>
             <table class="pricing-table">
                 <thead>
                     <tr>
@@ -927,9 +929,33 @@
                     </tr>
                 </tbody>
             </table>
+
+            <h3 style="font-size:18px; font-weight:700; color:var(--dark); margin-bottom:24px; margin-top:40px;">ウェディング・二次会プラン</h3>
+            <table class="pricing-table">
+                <thead>
+                    <tr>
+                        <th>プラン</th>
+                        <th>料金</th>
+                        <th>内容</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>ウェディング</strong></td>
+                        <td><span class="price-amount">¥80,000</span></td>
+                        <td><span class="price-ext">4時間、設営・撤去込</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>二次会</strong></td>
+                        <td><span class="price-amount">¥50,000</span></td>
+                        <td><span class="price-ext">3時間、設営・撤去込</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
             <div class="pricing-note">
-                <strong>キリシマビト会員割引あり（¥5,000 OFF）</strong><br>
-                ※ 料金は税込表示です。飲食の持ち込みについては事前にご相談ください。
+                <strong>お問い合わせください</strong><br>
+                ※ 料金は税込表示です。ケータリングや各種オプションについては事前にご相談ください。
             </div>
         </div>
     </div>
@@ -1013,8 +1039,7 @@
             <div class="access-map-placeholder">
                 <div class="access-map-icon">📍</div>
                 <div class="access-map-text">
-                    霧島市内<br>
-                    <span style="font-size:12px; color:var(--text-light);">詳細住所はお問い合わせください</span>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3383.0000000000005!2d130.75357!3d31.74025!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x35405d4c0000000%3A0x0!2zM0nihpDhuaDlhZnkuq3kuqzjgI8xOeKAkyAyM!5e0!3m2!1sja!2sjp!4v1234567890" width="100%" height="100%" style="border:none; border-radius:8px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
             <div class="access-details">
@@ -1022,11 +1047,11 @@
                 <h2 class="section-title">アクセス</h2>
                 <div class="access-item">
                     <span class="access-item-label">所在地</span>
-                    <span class="access-item-value">鹿児島県霧島市内<br><small style="color:var(--text-light);">詳細住所はお問い合わせください</small></span>
+                    <span class="access-item-value">鹿児島県霧島市国分中央３丁目１９−２３</span>
                 </div>
                 <div class="access-item">
                     <span class="access-item-label">駐車場</span>
-                    <span class="access-item-value">あり（無料）</span>
+                    <span class="access-item-value">無し</span>
                 </div>
                 <div class="access-item">
                     <span class="access-item-label">収容人数</span>
@@ -1039,6 +1064,10 @@
                 <div class="access-item">
                     <span class="access-item-label">お問い合わせ</span>
                     <span class="access-item-value"><a href="../contact/" style="color:var(--green); font-weight:700;">お問い合わせフォーム</a>よりご連絡ください</span>
+                </div>
+                <div class="access-item">
+                    <span class="access-item-label">LINE</span>
+                    <span class="access-item-value"><a href="https://line.me/R/ti/p/@438gkjdo" target="_blank" rel="noopener" style="color:var(--green); font-weight:700;">LINE公式アカウント</a></span>
                 </div>
             </div>
         </div>

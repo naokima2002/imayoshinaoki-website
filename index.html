@@ -162,13 +162,15 @@
         /* ── Dropdown nav ── */
         .nav-has-dropdown { position: relative; }
         .nav-dropdown-menu {
-            display: none; position: absolute; top: calc(100% + 10px); left: 50%;
+            display: none; position: absolute; top: calc(100% + 6px); left: 50%;
             transform: translateX(-50%);
             background: #fff; border: 1px solid var(--border);
             border-radius: 12px; padding: 6px 0; min-width: 190px;
             box-shadow: 0 8px 32px rgba(30,92,50,0.15); z-index: 200; white-space: nowrap;
         }
-        .nav-has-dropdown:hover .nav-dropdown-menu { display: block; }
+        .nav-has-dropdown:hover .nav-dropdown-menu,
+        .nav-dropdown-menu:hover { display: block; }
+        .nav-has-dropdown > a:hover + .nav-dropdown-menu { display: block; }
         .nav-dropdown-menu li { list-style: none; }
         .nav-dropdown-menu a {
             display: block; padding: 10px 18px;
