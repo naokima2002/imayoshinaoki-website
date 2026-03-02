@@ -25,7 +25,7 @@
     <meta name="twitter:image" content="https://imayoshinaoki.fun/assets/images/ogp.jpg">
 
     <!-- SEO Keywords -->
-    <meta name="keywords" content="今吉直樹,霧島市,霧島,鹿児島,地域情報,イベント,まちづくり,イージーライダーハウス,こくぶベース,みぞべーす,キリシマビト,ゆめカタチラボ,補助金,ふるさとプロデューサー">
+    <meta name="keywords" content="今吉直樹,霧島市,霧島,鹿児島,地域情報,イベント,まちづくり,イージーライダーハウス,こくぶベース,みぞべーす,キリシマビト,補助金,ふるさとプロデューサー">
     <meta name="author" content="今吉直樹">
     <meta name="robots" content="index, follow">
 
@@ -767,7 +767,7 @@
     <div class="container">
         <div class="fade-up">
             <p class="section-label">Facilities</p>
-            <h2 class="section-title" id="facilities-title">霧島の拠点施設</h2>
+            <h2 class="section-title" id="facilities-title">キリシマビトスペース</h2>
             <p class="section-desc">今吉直樹が関わる霧島市内の3つの施設をご紹介。イベント開催・スペース活用・入居者募集中！</p>
         </div>
         <div class="facilities-grid">
@@ -848,7 +848,7 @@
                 </h2>
                 <p class="banner-desc">
                     「キリシマビト」は、霧島に関わるすべての人が主役になれるコミュニティプロジェクトです。
-                    ゆめカタチラボを通じて、夢を持つ仲間をつなぎ、地域に新しい価値を生み出します。
+                    キリシマビトを通じて、夢を持つ仲間をつなぎ、地域に新しい価値を生み出します。
                 </p>
                 <div class="banner-pills">
                     <span class="banner-pill">🌱 コミュニティ</span>
@@ -861,7 +861,7 @@
             <div class="banner-visual" aria-hidden="true">
                 <div class="banner-card">
                     <div class="banner-card-icon">🌿</div>
-                    <div class="banner-card-title">ゆめカタチラボ</div>
+                    <div class="banner-card-title">キリシマビト</div>
                     <div class="banner-card-sub">月会費 ¥3,000〜</div>
                 </div>
                 <div class="banner-card">
@@ -920,7 +920,7 @@
                 <p class="about-text">
                     現在は「キリシマビト」として、霧島を拠点に地域課題解決・起業支援・コミュニティ形成に取り組む。
                     イージーライダーハウス（ライブハウス）・こくぶベース・みぞべーすの3施設を運営し、
-                    「ゆめカタチラボ」コミュニティを通じて霧島に関わる人たちをつないでいる。
+                    「キリシマビト」コミュニティを通じて霧島に関わる人たちをつないでいる。
                 </p>
                 <div class="about-tags">
                     <span class="about-tag">元霧島市役所（17年）</span>
@@ -944,7 +944,7 @@
                     </div>
                     <div class="history-item">
                         <div class="history-year">2025〜</div>
-                        <div class="history-desc">キリシマビト・ゆめカタチラボを発足。3施設の運営を開始</div>
+                        <div class="history-desc">キリシマビトを発足。3施設の運営を開始</div>
                     </div>
                 </div>
                 <div style="margin-top:24px;">
@@ -1172,7 +1172,7 @@
             { id:1, title:{rendered:'霧島神宮春まつり開催のお知らせ'}, date:'2026-03-02', excerpt:{rendered:'霧島神宮で春まつりが開催されます…'}, link:'#', meta:{source_site:'city'} },
             { id:2, title:{rendered:'きりなびイベント：霧島アートの森 春の企画展'}, date:'2026-03-01', excerpt:{rendered:'霧島アートの森で春の企画展が始まります…'}, link:'#', meta:{source_site:'kirinavi'} },
             { id:3, title:{rendered:'まいぷれ掲載：霧島の新しいお店がオープン'}, date:'2026-03-01', excerpt:{rendered:'霧島市内に新しいお店がオープンしました…'}, link:'#', meta:{source_site:'mypl'} },
-            { id:4, title:{rendered:'今吉直樹Facebook：ゆめカタチラボ定例会レポート'}, date:'2026-02-28', excerpt:{rendered:'先日のゆめカタチラボ定例会の様子をお伝えします…'}, link:'#', meta:{source_site:'facebook'} },
+            { id:4, title:{rendered:'今吉直樹Facebook：キリシマビト定例会レポート'}, date:'2026-02-28', excerpt:{rendered:'先日のキリシマビト定例会の様子をお伝えします…'}, link:'#', meta:{source_site:'facebook'} },
             { id:5, title:{rendered:'霧島市観光情報：桜の開花予想'}, date:'2026-02-27', excerpt:{rendered:'今年の霧島市の桜開花予想が発表されました…'}, link:'#', meta:{source_site:'city'} },
             { id:6, title:{rendered:'イージーライダーハウス：次回ライブ情報'}, date:'2026-02-26', excerpt:{rendered:'今月のイベント情報をお知らせします…'}, link:'#', meta:{source_site:'instagram'} },
         ];
@@ -1218,7 +1218,14 @@
             height: 'auto',
             headerToolbar: { left: 'prev', center: 'title', right: 'next' },
             events: events,
-            eventClick: (info) => { if (info.event.url) { info.jsEvent.preventDefault(); window.open(info.event.url, '_blank'); } },
+            eventClick: (info) => {
+                info.jsEvent.preventDefault();
+                if (info.event.url) {
+                    window.location.href = info.event.url;
+                } else {
+                    window.location.href = 'events/';
+                }
+            },
             eventColor: '#1E5C32',
         }).render();
     }
@@ -1253,7 +1260,7 @@
             { title: '霧島神宮春まつり', start: '2026-03-15', url: 'https://www.city.kirishima.lg.jp/', source: '霧島市役所' },
             { title: 'イージーライダーハウス ライブイベント', start: '2026-03-20', url: 'easy-rider/', source: 'イージーライダーハウス' },
             { title: '霧島アートの森 春の企画展', start: '2026-03-21', url: 'https://kirinavi.com/', source: 'きりなび' },
-            { title: 'ゆめカタチラボ 3月定例会', start: '2026-03-25', url: 'kirishimabito/', source: 'キリシマビト' },
+            { title: 'キリシマビト 3月定例会', start: '2026-03-25', url: 'kirishimabito/', source: 'キリシマビト' },
             { title: '霧島市まちづくりシンポジウム', start: '2026-04-05', url: 'https://www.city.kirishima.lg.jp/', source: '霧島市役所' },
         ];
         if (WP_API.includes('YOUR-WORDPRESS')) {

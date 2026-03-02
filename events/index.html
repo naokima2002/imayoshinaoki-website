@@ -385,7 +385,7 @@
         { title: '霧島神宮春まつり', start: '2026-03-15', url: 'https://www.city.kirishima.lg.jp/', source: 'city', venue: '霧島神宮' },
         { title: 'イージーライダーハウス ライブイベント', start: '2026-03-20', url: '../easy-rider/', source: 'er', venue: 'イージーライダーハウス' },
         { title: '霧島アートの森 春の企画展', start: '2026-03-21', end: '2026-04-20', url: 'https://kirinavi.com/', source: 'kirinavi', venue: '霧島アートの森' },
-        { title: 'ゆめカタチラボ 3月定例会', start: '2026-03-25', url: '../kirishimabito/', source: 'city', venue: 'こくぶベース' },
+        { title: 'キリシマビト 3月定例会', start: '2026-03-25', url: '../kirishimabito/', source: 'city', venue: 'こくぶベース' },
         { title: '霧島市観光博覧会 春の陣', start: '2026-04-05', url: 'https://www.city.kirishima.lg.jp/', source: 'city', venue: '霧島市内各所' },
         { title: '霧島国際音楽祭 プレイベント', start: '2026-04-10', url: 'https://kirinavi.com/', source: 'kirinavi', venue: '霧島文化会館' },
         { title: 'まいぷれ掲載：春の地域マルシェ', start: '2026-04-12', url: 'https://kirishima.mypl.net/', source: 'mypl', venue: '霧島市内' },
@@ -465,9 +465,9 @@
             headerToolbar: { left: 'prev,next today', center: 'title', right: window.innerWidth >= 640 ? 'dayGridMonth,listMonth' : '' },
             events: fcEvents,
             eventClick: (info) => {
+                info.jsEvent.preventDefault();
                 if (info.event.url) {
-                    info.jsEvent.preventDefault();
-                    window.open(info.event.url, '_blank', 'noopener');
+                    window.location.href = info.event.url;
                 }
             },
             dayMaxEvents: 3,
