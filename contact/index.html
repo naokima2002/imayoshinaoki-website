@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お問い合わせ｜今吉なおき公式サイト</title>
+    <meta name="description" content="今吉なおき公式サイトへのお問い合わせはこちら。施設貸切・入居相談・補助金相談・取材依頼など、お気軽にご連絡ください。">
+    <link rel="canonical" href="https://imayoshinaoki.fun/contact/">
+    <meta property="og:url" content="https://imayoshinaoki.fun/contact/">
+    <meta property="og:title" content="お問い合わせ｜今吉なおき公式サイト">
+    <meta property="og:locale" content="ja_JP">
+    <meta name="robots" content="index, follow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root { --green:#1E5C32; --green-light:#2E7D46; --green-pale:#EAF4EE; --green-dark:#163F24; --red:#C94B2C; --dark:#1A2218; --text:#2D3829; --text-light:#6B7564; --bg:#F9FAF7; --white:#FFFFFF; --border:#DDE5D8; --shadow:0 4px 24px rgba(30,92,50,0.10); }
+        html { scroll-behavior:smooth; }
+        body { font-family:'Noto Sans JP',sans-serif; color:var(--text); background:var(--bg); line-height:1.7; }
+        a { text-decoration:none; color:inherit; }
+        .container { max-width:920px; margin:0 auto; padding:0 24px; }
+        .fade-up { opacity:0; transform:translateY(28px); transition:opacity 0.6s ease,transform 0.6s ease; }
+        .fade-up.visible { opacity:1; transform:translateY(0); }
+        #header { position:fixed; top:0; left:0; right:0; z-index:1000; background:rgba(255,255,255,0.97); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); transition:box-shadow 0.3s; }
+        #header.scrolled { box-shadow:0 2px 24px rgba(30,92,50,0.10); }
+        .header-inner { display:flex; align-items:center; justify-content:space-between; height:68px; }
+        .logo { display:flex; align-items:center; gap:10px; }
+        .logo-mark { width:38px; height:38px; background:var(--green); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-family:'Noto Serif JP',serif; font-size:14px; font-weight:700; }
+        .logo-text { font-family:'Noto Serif JP',serif; font-size:17px; font-weight:700; color:var(--dark); line-height:1.2; }
+        .logo-sub { font-size:10px; color:var(--text-light); }
+        nav ul { display:flex; align-items:center; list-style:none; gap:28px; }
+        nav a { font-size:13px; font-weight:500; color:var(--text); }
+        .nav-cta { background:var(--green); color:#fff !important; padding:9px 20px; border-radius:50px; font-size:13px; font-weight:700; }
+        .hamburger { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:6px; }
+        .hamburger span { display:block; width:24px; height:2px; background:var(--dark); border-radius:2px; transition:all 0.3s; }
+        .hamburger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity:0; }
+        .hamburger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+        .mobile-menu { display:none; position:fixed; top:68px; left:0; right:0; bottom:0; background:rgba(255,255,255,0.98); padding:32px 24px; z-index:999; flex-direction:column; }
+        .mobile-menu.open { display:flex; }
+        .mobile-menu a { display:block; padding:16px 0; font-size:16px; font-weight:500; border-bottom:1px solid var(--border); color:var(--dark); }
+        .mobile-menu .nav-cta { margin-top:24px; text-align:center; border-radius:50px; padding:14px; display:block; border:none; }
+        .page-hero { padding:108px 0 56px; background:linear-gradient(135deg,var(--green-dark),var(--green)); }
+        .page-breadcrumb { display:flex; align-items:center; gap:8px; font-size:12px; color:rgba(255,255,255,0.7); margin-bottom:14px; }
+        .page-breadcrumb a { color:rgba(255,255,255,0.7); }
+        .page-label { font-size:11px; font-weight:700; letter-spacing:0.25em; text-transform:uppercase; color:rgba(255,255,255,0.7); margin-bottom:10px; }
+        .page-title { font-family:'Noto Serif JP',serif; font-size:clamp(24px,4vw,36px); font-weight:700; color:#fff; line-height:1.4; margin-bottom:8px; }
+        .page-desc { font-size:14px; color:rgba(255,255,255,0.8); }
+        .page-body { padding:56px 0 80px; }
+        .contact-layout { display:grid; grid-template-columns:1fr 280px; gap:40px; align-items:start; }
+        .form-card { background:var(--white); border-radius:20px; padding:36px; box-shadow:var(--shadow); border:1px solid var(--border); }
+        .form-title { font-family:'Noto Serif JP',serif; font-size:20px; font-weight:700; color:var(--dark); margin-bottom:24px; padding-bottom:16px; border-bottom:1px solid var(--border); }
+        .form-group { margin-bottom:20px; }
+        .form-label { display:block; font-size:13px; font-weight:700; color:var(--dark); margin-bottom:6px; }
+        .required { color:var(--red); margin-left:4px; }
+        .form-input, .form-select, .form-textarea { width:100%; padding:11px 16px; border:1.5px solid var(--border); border-radius:10px; font-size:14px; font-family:'Noto Sans JP',sans-serif; background:var(--white); color:var(--dark); transition:border-color 0.2s; }
+        .form-input:focus, .form-select:focus, .form-textarea:focus { outline:none; border-color:var(--green); box-shadow:0 0 0 3px var(--green-pale); }
+        .form-textarea { resize:vertical; min-height:160px; }
+        .form-submit { display:block; width:100%; background:var(--green); color:#fff; border:none; padding:15px; border-radius:50px; font-size:15px; font-weight:700; cursor:pointer; transition:all 0.3s; font-family:'Noto Sans JP',sans-serif; }
+        .form-submit:hover { background:var(--green-light); transform:translateY(-1px); }
+        .form-note { font-size:12px; color:var(--text-light); text-align:center; margin-top:12px; }
+        .sidebar { display:flex; flex-direction:column; gap:20px; }
+        .sidebar-card { background:var(--white); border-radius:16px; padding:20px; box-shadow:var(--shadow); border:1px solid var(--border); }
+        .sidebar-title { font-size:13px; font-weight:700; color:var(--dark); padding-bottom:12px; border-bottom:1px solid var(--border); margin-bottom:16px; }
+        .inquiry-types { display:flex; flex-direction:column; gap:8px; }
+        .inquiry-type { display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--border); }
+        .inquiry-type:last-child { border-bottom:none; }
+        .inquiry-icon { font-size:18px; }
+        .inquiry-label { font-size:13px; color:var(--dark); font-weight:500; }
+        .sns-links { display:flex; flex-direction:column; gap:10px; }
+        .sns-link { display:flex; align-items:center; gap:10px; padding:10px; border-radius:10px; border:1px solid var(--border); transition:all 0.2s; font-size:13px; font-weight:600; }
+        .sns-link:hover { transform:translateX(3px); }
+        .sns-fb { color:#1877F2; }
+        .sns-fb:hover { background:#E7F0FD; border-color:#1877F2; }
+        .sns-ig { color:#C13584; }
+        .sns-ig:hover { background:#FDF0F7; border-color:#C13584; }
+        #footer { background:var(--dark); color:rgba(255,255,255,0.8); padding:32px 0 24px; }
+        .footer-nav { display:flex; flex-wrap:wrap; gap:24px; margin-bottom:24px; }
+        .footer-nav a { font-size:13px; color:rgba(255,255,255,0.65); }
+        .footer-nav a:hover { color:#fff; }
+        .footer-bottom { display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; font-size:12px; color:rgba(255,255,255,0.4); padding-top:20px; border-top:1px solid rgba(255,255,255,0.1); }
+        .footer-bottom-links { display:flex; gap:20px; }
+        .footer-bottom-links a { color:rgba(255,255,255,0.4); }
+        .footer-bottom-links a:hover { color:rgba(255,255,255,0.7); }
+        @media (max-width:768px) { nav { display:none; } .hamburger { display:flex; } .contact-layout { grid-template-columns:1fr; } }
+        @media (max-width:640px) { .container { padding:0 16px; } .form-card { padding:24px; } }
+    </style>
+</head>
+<body>
+<header id="header">
+    <div class="container" style="max-width:1100px">
+        <div class="header-inner">
+            <a href="../" class="logo">
+                <div class="logo-mark">今</div>
+                <div><div class="logo-text">今吉なおき</div><div class="logo-sub">霧島市情報ポータル</div></div>
+            </a>
+            <nav><ul>
+                <li><a href="../#kirishima-news">霧島情報</a></li>
+                <li><a href="../events/">イベント</a></li>
+                <li><a href="../#facilities">施設</a></li>
+                <li><a href="../topics/">トピックス</a></li>
+                <li><a href="../about/">プロフィール</a></li>
+                <li><a href="../contact/" class="nav-cta" aria-current="page">お問い合わせ</a></li>
+            </ul></nav>
+            <button class="hamburger" id="hamburger" aria-label="メニューを開く"><span></span><span></span><span></span></button>
+        </div>
+    </div>
+</header>
+<nav class="mobile-menu" id="mobileMenu">
+    <a href="../#kirishima-news">霧島情報</a><a href="../events/">イベントカレンダー</a>
+    <a href="../#facilities">施設紹介</a><a href="../topics/">トピックス</a>
+    <a href="../about/">今吉なおきについて</a><a href="../contact/" class="nav-cta">お問い合わせ</a>
+</nav>
+
+<div class="page-hero">
+    <div class="container">
+        <div class="page-breadcrumb"><a href="../">ホーム</a><span>›</span><span>お問い合わせ</span></div>
+        <p class="page-label">Contact</p>
+        <h1 class="page-title">お問い合わせ</h1>
+        <p class="page-desc">施設貸切・入居相談・補助金相談・取材依頼など、お気軽にどうぞ</p>
+    </div>
+</div>
+
+<main class="page-body">
+    <div class="container">
+        <div class="contact-layout">
+            <div class="form-card fade-up">
+                <div class="form-title">📩 お問い合わせフォーム</div>
+                <!-- Formspree のフォームID を設定してください -->
+                <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" id="contactForm">
+                    <input type="hidden" name="_subject" value="今吉なおき公式サイトへのお問い合わせ">
+                    <input type="hidden" name="_next" value="https://imayoshinaoki.fun/contact/?sent=1">
+                    <div class="form-group">
+                        <label class="form-label">お問い合わせ種別<span class="required">*</span></label>
+                        <select class="form-select" name="inquiry_type" required>
+                            <option value="">選択してください</option>
+                            <option value="facility-rent">施設の貸切について（イージーライダーハウス・こくぶベース）</option>
+                            <option value="tenant">入居・テナント相談（みぞべーす）</option>
+                            <option value="subsidy">補助金相談・コンサルティング</option>
+                            <option value="community">キリシマビト・ゆめカタチラボへの参加</option>
+                            <option value="media">取材・メディア掲載</option>
+                            <option value="lecture">講演・登壇依頼</option>
+                            <option value="kirishima-info">霧島市情報サイトについて</option>
+                            <option value="other">その他</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">お名前<span class="required">*</span></label>
+                        <input type="text" class="form-input" name="name" placeholder="今吉 直樹" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">メールアドレス<span class="required">*</span></label>
+                        <input type="email" class="form-input" name="email" placeholder="example@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">電話番号</label>
+                        <input type="tel" class="form-input" name="phone" placeholder="0995-XX-XXXX">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">会社名・団体名</label>
+                        <input type="text" class="form-input" name="company" placeholder="株式会社 ○○ / 個人">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">お問い合わせ内容<span class="required">*</span></label>
+                        <textarea class="form-textarea" name="message" placeholder="ご質問・ご要望・ご相談内容をできるだけ詳しくお書きください。&#10;&#10;（施設利用の場合：希望日時・人数・利用目的など）" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:13px;">
+                            <input type="checkbox" name="privacy" required style="margin-top:3px;accent-color:var(--green);">
+                            <span><a href="../privacy-policy/" target="_blank" style="color:var(--green);font-weight:700">プライバシーポリシー</a>に同意します<span class="required">*</span></span>
+                        </label>
+                    </div>
+                    <button type="submit" class="form-submit">送信する →</button>
+                    <div class="form-note">通常 1〜2営業日以内にご返信いたします</div>
+                </form>
+            </div>
+            <div class="sidebar fade-up">
+                <div class="sidebar-card">
+                    <div class="sidebar-title">📋 対応しているお問い合わせ</div>
+                    <div class="inquiry-types">
+                        <div class="inquiry-type"><span class="inquiry-icon">🎸</span><span class="inquiry-label">施設貸切（ライブハウス等）</span></div>
+                        <div class="inquiry-type"><span class="inquiry-icon">🏠</span><span class="inquiry-label">入居・テナント相談</span></div>
+                        <div class="inquiry-type"><span class="inquiry-icon">💰</span><span class="inquiry-label">補助金コンサルティング</span></div>
+                        <div class="inquiry-type"><span class="inquiry-icon">🌿</span><span class="inquiry-label">コミュニティ参加</span></div>
+                        <div class="inquiry-type"><span class="inquiry-icon">🎤</span><span class="inquiry-label">講演・取材依頼</span></div>
+                        <div class="inquiry-type"><span class="inquiry-icon">📰</span><span class="inquiry-label">サイト掲載情報について</span></div>
+                    </div>
+                </div>
+                <div class="sidebar-card">
+                    <div class="sidebar-title">📅 施設の予約</div>
+                    <p style="font-size:13px;color:var(--text-light);margin-bottom:16px;line-height:1.7;">施設の利用予約はこちらから</p>
+                    <a href="../reservation/" style="display:flex;align-items:center;justify-content:center;gap:8px;background:var(--green);color:#fff;padding:12px;border-radius:50px;font-size:13px;font-weight:700;transition:all 0.2s;" onmouseover="this.style.background='var(--green-light)'" onmouseout="this.style.background='var(--green)'">
+                        📅 予約サイトへ
+                    </a>
+                </div>
+                <div class="sidebar-card">
+                    <div class="sidebar-title">📱 SNSからも連絡OK</div>
+                    <div class="sns-links">
+                        <a href="https://www.facebook.com/naoki.imayoshi" target="_blank" rel="noopener" class="sns-link sns-fb">
+                            <span style="font-size:20px">📘</span>
+                            <div><div style="font-size:11px;color:var(--text-light)">Facebook</div><div>今吉直樹</div></div>
+                        </a>
+                        <a href="https://www.instagram.com/naoki_imayoshi" target="_blank" rel="noopener" class="sns-link sns-ig">
+                            <span style="font-size:20px">📷</span>
+                            <div><div style="font-size:11px;color:var(--text-light)">Instagram DM</div><div>@naoki_imayoshi</div></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer id="footer">
+    <div class="container" style="max-width:1100px">
+        <div class="footer-nav">
+            <a href="../">ホーム</a><a href="../events/">イベント</a><a href="../topics/">トピックス</a>
+            <a href="../easy-rider/">イージーライダーハウス</a><a href="../kokubu-base/">こくぶベース</a>
+            <a href="../mizo-base/">みぞべーす</a><a href="../kirishimabito/">キリシマビト</a>
+            <a href="../about/">プロフィール</a><a href="../contact/">お問い合わせ</a>
+        </div>
+        <div class="footer-bottom">
+            <div>© 2025 今吉直樹 / Naoki Imayoshi. All rights reserved.</div>
+            <div class="footer-bottom-links"><a href="../privacy-policy/">プライバシーポリシー</a></div>
+        </div>
+    </div>
+</footer>
+<script>
+    window.addEventListener('scroll', () => { document.getElementById('header').classList.toggle('scrolled', window.scrollY > 50); }, { passive:true });
+    const hamburger = document.getElementById('hamburger'), mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => { const o=mobileMenu.classList.toggle('open'); hamburger.classList.toggle('open',o); document.body.style.overflow=o?'hidden':''; });
+    const obs = new IntersectionObserver((entries) => { entries.forEach((e,i)=>{ if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('visible'),i*80); obs.unobserve(e.target); } }); }, {threshold:0.1});
+    document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+    // Show success message
+    if (new URLSearchParams(window.location.search).get('sent') === '1') {
+        const form = document.getElementById('contactForm');
+        form.innerHTML = '<div style="text-align:center;padding:48px 24px"><div style="font-size:48px;margin-bottom:16px">✅</div><div style="font-family:Noto Serif JP,serif;font-size:20px;font-weight:700;color:var(--dark);margin-bottom:12px">送信が完了しました</div><p style="color:var(--text-light);font-size:14px;margin-bottom:24px">お問い合わせありがとうございます。<br>1〜2営業日以内にご返信いたします。</p><a href="../" style="display:inline-block;background:var(--green);color:#fff;padding:12px 28px;border-radius:50px;font-weight:700;font-size:14px;">トップページへ戻る</a></div>';
+    }
+</script>
+</body>
+</html>

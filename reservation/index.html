@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>予約・申し込み｜今吉なおき公式サイト</title>
+    <meta name="description" content="イージーライダーハウス・こくぶベース・みぞべーすの予約はこちら。ゆめカタチラボ予約サイト（reserva.be）からオンライン予約が可能です。">
+    <link rel="canonical" href="https://imayoshinaoki.fun/reservation/">
+    <meta property="og:url" content="https://imayoshinaoki.fun/reservation/">
+    <meta property="og:title" content="予約・申し込み｜今吉なおき公式サイト">
+    <meta property="og:locale" content="ja_JP">
+    <meta name="robots" content="index, follow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root { --green:#1E5C32; --green-light:#2E7D46; --green-pale:#EAF4EE; --green-dark:#163F24; --dark:#1A2218; --text:#2D3829; --text-light:#6B7564; --bg:#F9FAF7; --white:#FFFFFF; --border:#DDE5D8; --shadow:0 4px 24px rgba(30,92,50,0.10); --gold:#C5930A; --gold-pale:#FDF6E3; }
+        html { scroll-behavior:smooth; }
+        body { font-family:'Noto Sans JP',sans-serif; color:var(--text); background:var(--bg); line-height:1.7; }
+        a { text-decoration:none; color:inherit; }
+        .container { max-width:900px; margin:0 auto; padding:0 24px; }
+        .fade-up { opacity:0; transform:translateY(28px); transition:opacity 0.6s ease,transform 0.6s ease; }
+        .fade-up.visible { opacity:1; transform:translateY(0); }
+        #header { position:fixed; top:0; left:0; right:0; z-index:1000; background:rgba(255,255,255,0.97); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); transition:box-shadow 0.3s; }
+        #header.scrolled { box-shadow:0 2px 24px rgba(30,92,50,0.10); }
+        .header-inner { display:flex; align-items:center; justify-content:space-between; height:68px; }
+        .logo { display:flex; align-items:center; gap:10px; }
+        .logo-mark { width:38px; height:38px; background:var(--green); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-family:'Noto Serif JP',serif; font-size:14px; font-weight:700; }
+        .logo-text { font-family:'Noto Serif JP',serif; font-size:17px; font-weight:700; color:var(--dark); line-height:1.2; }
+        .logo-sub { font-size:10px; color:var(--text-light); }
+        nav ul { display:flex; align-items:center; list-style:none; gap:28px; }
+        nav a { font-size:13px; font-weight:500; color:var(--text); }
+        .nav-cta { background:var(--green); color:#fff !important; padding:9px 20px; border-radius:50px; font-size:13px; font-weight:700; }
+        .hamburger { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:6px; }
+        .hamburger span { display:block; width:24px; height:2px; background:var(--dark); border-radius:2px; transition:all 0.3s; }
+        .hamburger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity:0; }
+        .hamburger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+        .mobile-menu { display:none; position:fixed; top:68px; left:0; right:0; bottom:0; background:rgba(255,255,255,0.98); padding:32px 24px; z-index:999; flex-direction:column; }
+        .mobile-menu.open { display:flex; }
+        .mobile-menu a { display:block; padding:16px 0; font-size:16px; font-weight:500; border-bottom:1px solid var(--border); color:var(--dark); }
+        .mobile-menu .nav-cta { margin-top:24px; text-align:center; border-radius:50px; padding:14px; display:block; border:none; }
+        .page-hero { padding:108px 0 56px; background:linear-gradient(135deg,var(--green-dark),var(--green)); }
+        .page-breadcrumb { display:flex; align-items:center; gap:8px; font-size:12px; color:rgba(255,255,255,0.7); margin-bottom:14px; }
+        .page-breadcrumb a { color:rgba(255,255,255,0.7); }
+        .page-label { font-size:11px; font-weight:700; letter-spacing:0.25em; text-transform:uppercase; color:rgba(255,255,255,0.7); margin-bottom:10px; }
+        .page-title { font-family:'Noto Serif JP',serif; font-size:clamp(24px,4vw,36px); font-weight:700; color:#fff; line-height:1.4; margin-bottom:8px; }
+        .page-desc { font-size:14px; color:rgba(255,255,255,0.8); }
+        .page-body { padding:56px 0 80px; }
+        .reserva-banner { background:var(--white); border-radius:24px; box-shadow:var(--shadow); border:2px solid var(--green); overflow:hidden; margin-bottom:40px; }
+        .reserva-banner-header { background:linear-gradient(135deg,var(--green-dark),var(--green)); padding:32px 40px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:20px; }
+        .reserva-title { font-family:'Noto Serif JP',serif; font-size:22px; font-weight:700; color:#fff; margin-bottom:6px; }
+        .reserva-desc { font-size:14px; color:rgba(255,255,255,0.8); }
+        .btn-reserva { display:inline-flex; align-items:center; gap:8px; background:#fff; color:var(--green); padding:13px 28px; border-radius:50px; font-weight:700; font-size:14px; white-space:nowrap; transition:all 0.3s; }
+        .btn-reserva:hover { transform:translateY(-2px); box-shadow:0 4px 20px rgba(0,0,0,0.15); }
+        .reserva-facilities { padding:32px 40px; display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+        .reserva-fac { border:1px solid var(--border); border-radius:14px; padding:20px; text-align:center; transition:all 0.2s; }
+        .reserva-fac:hover { border-color:var(--green); background:var(--green-pale); }
+        .reserva-fac-icon { font-size:32px; margin-bottom:10px; }
+        .reserva-fac-name { font-size:14px; font-weight:700; color:var(--dark); margin-bottom:4px; }
+        .reserva-fac-desc { font-size:12px; color:var(--text-light); line-height:1.6; }
+        .step-section { background:var(--white); border-radius:20px; padding:32px; box-shadow:var(--shadow); border:1px solid var(--border); margin-bottom:24px; }
+        .step-title { font-family:'Noto Serif JP',serif; font-size:18px; font-weight:700; color:var(--dark); margin-bottom:20px; }
+        .steps { display:flex; flex-direction:column; gap:16px; }
+        .step { display:flex; gap:16px; align-items:flex-start; }
+        .step-num { width:32px; height:32px; background:var(--green); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-size:13px; font-weight:700; flex-shrink:0; }
+        .step-content-title { font-size:14px; font-weight:700; color:var(--dark); margin-bottom:4px; }
+        .step-content-desc { font-size:13px; color:var(--text-light); }
+        .notice-box { background:var(--gold-pale); border:1px solid var(--gold); border-radius:14px; padding:20px; margin-bottom:24px; }
+        .notice-title { font-size:13px; font-weight:700; color:var(--gold); margin-bottom:8px; }
+        .notice-text { font-size:13px; color:var(--text); line-height:1.7; }
+        #footer { background:var(--dark); color:rgba(255,255,255,0.8); padding:32px 0 24px; }
+        .footer-nav { display:flex; flex-wrap:wrap; gap:24px; margin-bottom:24px; }
+        .footer-nav a { font-size:13px; color:rgba(255,255,255,0.65); }
+        .footer-nav a:hover { color:#fff; }
+        .footer-bottom { display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; font-size:12px; color:rgba(255,255,255,0.4); padding-top:20px; border-top:1px solid rgba(255,255,255,0.1); }
+        .footer-bottom-links { display:flex; gap:20px; }
+        .footer-bottom-links a { color:rgba(255,255,255,0.4); }
+        .footer-bottom-links a:hover { color:rgba(255,255,255,0.7); }
+        @media (max-width:768px) { nav { display:none; } .hamburger { display:flex; } .reserva-facilities { grid-template-columns:1fr; } }
+        @media (max-width:640px) { .container { padding:0 16px; } .reserva-banner-header { flex-direction:column; } .reserva-facilities { padding:20px; } }
+    </style>
+</head>
+<body>
+<header id="header">
+    <div class="container" style="max-width:1100px">
+        <div class="header-inner">
+            <a href="../" class="logo">
+                <div class="logo-mark">今</div>
+                <div><div class="logo-text">今吉なおき</div><div class="logo-sub">霧島市情報ポータル</div></div>
+            </a>
+            <nav><ul>
+                <li><a href="../#kirishima-news">霧島情報</a></li>
+                <li><a href="../events/">イベント</a></li>
+                <li><a href="../#facilities">施設</a></li>
+                <li><a href="../topics/">トピックス</a></li>
+                <li><a href="../about/">プロフィール</a></li>
+                <li><a href="../contact/" class="nav-cta">お問い合わせ</a></li>
+            </ul></nav>
+            <button class="hamburger" id="hamburger" aria-label="メニューを開く"><span></span><span></span><span></span></button>
+        </div>
+    </div>
+</header>
+<nav class="mobile-menu" id="mobileMenu">
+    <a href="../#kirishima-news">霧島情報</a><a href="../events/">イベントカレンダー</a>
+    <a href="../#facilities">施設紹介</a><a href="../topics/">トピックス</a>
+    <a href="../about/">今吉なおきについて</a><a href="../contact/" class="nav-cta">お問い合わせ</a>
+</nav>
+
+<div class="page-hero">
+    <div class="container" style="max-width:900px">
+        <div class="page-breadcrumb"><a href="../">ホーム</a><span>›</span><span>予約・申し込み</span></div>
+        <p class="page-label">Reservation</p>
+        <h1 class="page-title">予約・申し込み</h1>
+        <p class="page-desc">施設の利用予約・申し込みはこちらから</p>
+    </div>
+</div>
+
+<main class="page-body">
+    <div class="container">
+        <!-- reserva.be Banner -->
+        <div class="reserva-banner fade-up">
+            <div class="reserva-banner-header">
+                <div>
+                    <div class="reserva-title">ゆめカタチラボ 予約サイト</div>
+                    <div class="reserva-desc">オンライン予約カレンダーから空き確認・予約が可能です</div>
+                </div>
+                <a href="https://reserva.be/yumekatachilabo" target="_blank" rel="noopener" class="btn-reserva">
+                    📅 予約カレンダーを開く
+                </a>
+            </div>
+            <div class="reserva-facilities">
+                <div class="reserva-fac">
+                    <div class="reserva-fac-icon">🎸</div>
+                    <div class="reserva-fac-name">イージーライダーハウス</div>
+                    <div class="reserva-fac-desc">ライブハウス・小劇場の貸切予約</div>
+                </div>
+                <div class="reserva-fac">
+                    <div class="reserva-fac-icon">🏢</div>
+                    <div class="reserva-fac-name">こくぶベース</div>
+                    <div class="reserva-fac-desc">コミュニティスペースの利用予約</div>
+                </div>
+                <div class="reserva-fac">
+                    <div class="reserva-fac-icon">🌿</div>
+                    <div class="reserva-fac-name">ゆめカタチラボ</div>
+                    <div class="reserva-fac-desc">定例会・イベントへの申し込み</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 予約の流れ -->
+        <div class="step-section fade-up">
+            <div class="step-title">📋 予約の流れ</div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-num">1</div>
+                    <div><div class="step-content-title">予約サイトで空き確認</div><div class="step-content-desc">上記ボタンから reserva.be の予約カレンダーにアクセスし、希望日時の空きを確認します。</div></div>
+                </div>
+                <div class="step">
+                    <div class="step-num">2</div>
+                    <div><div class="step-content-title">必要事項を入力して予約</div><div class="step-content-desc">お名前・連絡先・利用内容（音楽ライブ・講演会・ワークショップなど）を入力して送信します。</div></div>
+                </div>
+                <div class="step">
+                    <div class="step-num">3</div>
+                    <div><div class="step-content-title">確認連絡</div><div class="step-content-desc">今吉直樹より1〜2営業日以内にご連絡します。詳細のすり合わせを行います。</div></div>
+                </div>
+                <div class="step">
+                    <div class="step-num">4</div>
+                    <div><div class="step-content-title">利用当日</div><div class="step-content-desc">当日は施設の鍵をお渡しします。利用後は現状回復をお願いします。</div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 注意事項 -->
+        <div class="notice-box fade-up">
+            <div class="notice-title">⚠️ ご利用の際の注意事項</div>
+            <div class="notice-text">
+                ・予約は原則 2日前までにお願いします（直前のご相談はお問い合わせフォームから）。<br>
+                ・キャンセルは前日までにご連絡ください。当日キャンセルはキャンセル料が発生する場合があります。<br>
+                ・施設内での飲食・騒音・近隣への配慮をお願いします。<br>
+                ・ご不明な点は <a href="../contact/" style="color:var(--green);font-weight:700">お問い合わせフォーム</a> よりご連絡ください。
+            </div>
+        </div>
+
+        <div style="text-align:center;padding:20px 0" class="fade-up">
+            <p style="font-size:14px;color:var(--text-light);margin-bottom:16px">予約サイトでのご予約が難しい場合はお問い合わせフォームからもご相談いただけます</p>
+            <a href="../contact/" style="display:inline-flex;align-items:center;gap:8px;background:var(--green);color:#fff;padding:13px 32px;border-radius:50px;font-weight:700;font-size:14px;transition:all 0.3s;" onmouseover="this.style.background='var(--green-light)'" onmouseout="this.style.background='var(--green)'">
+                📩 お問い合わせフォームへ
+            </a>
+        </div>
+    </div>
+</main>
+
+<footer id="footer">
+    <div class="container" style="max-width:1100px">
+        <div class="footer-nav">
+            <a href="../">ホーム</a><a href="../events/">イベント</a><a href="../topics/">トピックス</a>
+            <a href="../easy-rider/">イージーライダーハウス</a><a href="../kokubu-base/">こくぶベース</a>
+            <a href="../mizo-base/">みぞべーす</a><a href="../kirishimabito/">キリシマビト</a>
+            <a href="../about/">プロフィール</a><a href="../contact/">お問い合わせ</a>
+        </div>
+        <div class="footer-bottom">
+            <div>© 2025 今吉直樹 / Naoki Imayoshi. All rights reserved.</div>
+            <div class="footer-bottom-links"><a href="../privacy-policy/">プライバシーポリシー</a><a href="../contact/">お問い合わせ</a></div>
+        </div>
+    </div>
+</footer>
+<script>
+    window.addEventListener('scroll', () => { document.getElementById('header').classList.toggle('scrolled', window.scrollY > 50); }, { passive:true });
+    const hamburger = document.getElementById('hamburger'), mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => { const o=mobileMenu.classList.toggle('open'); hamburger.classList.toggle('open',o); document.body.style.overflow=o?'hidden':''; });
+    const obs = new IntersectionObserver((entries) => { entries.forEach((e,i)=>{ if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('visible'),i*80); obs.unobserve(e.target); } }); }, {threshold:0.1});
+    document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>今吉なおき公式サイト｜霧島市情報ポータル</title>
+    <meta name="description" content="霧島市の最新情報・イベント・地域ニュースを毎日お届け。今吉直樹（元霧島市役所・元市議会議員）による霧島市情報ポータルサイト。イージーライダーハウス・こくぶベース・みぞべーす情報も掲載。">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://imayoshinaoki.fun/">
+
+    <!-- OGP -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://imayoshinaoki.fun/">
+    <meta property="og:title" content="今吉なおき公式サイト｜霧島市情報ポータル">
+    <meta property="og:description" content="霧島市の最新情報・イベント・地域ニュースを毎日お届け。元市役所職員・元市議会議員の今吉直樹が霧島の今と未来をつなぐ情報発信サイト。">
+    <meta property="og:image" content="https://imayoshinaoki.fun/assets/images/ogp.jpg">
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:site_name" content="今吉なおき公式サイト｜霧島市情報ポータル">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="今吉なおき公式サイト｜霧島市情報ポータル">
+    <meta name="twitter:description" content="霧島市の最新情報・イベント・地域ニュースを毎日お届け。">
+    <meta name="twitter:image" content="https://imayoshinaoki.fun/assets/images/ogp.jpg">
+
+    <!-- SEO Keywords -->
+    <meta name="keywords" content="今吉直樹,霧島市,霧島,鹿児島,地域情報,イベント,まちづくり,イージーライダーハウス,こくぶベース,みぞべーす,キリシマビト,ゆめカタチラボ,補助金,ふるさとプロデューサー">
+    <meta name="author" content="今吉直樹">
+    <meta name="robots" content="index, follow">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- FullCalendar CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css" rel="stylesheet">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "今吉直樹",
+      "alternateName": "今吉なおき",
+      "url": "https://imayoshinaoki.fun",
+      "image": "https://imayoshinaoki.fun/assets/images/profile.jpg",
+      "jobTitle": "ふるさとプロデューサー",
+      "description": "元霧島市役所職員（17年）・元霧島市議会議員。株式会社FoodBase代表。霧島市を拠点に地域課題解決と起業支援に取り組む。",
+      "worksFor": [
+        {"@type": "Organization", "name": "株式会社FoodBase"},
+        {"@type": "Organization", "name": "キリシマビト"}
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "霧島市",
+        "addressRegion": "鹿児島県",
+        "addressCountry": "JP"
+      },
+      "sameAs": [
+        "https://www.facebook.com/naoki.imayoshi",
+        "https://www.instagram.com/naoki_imayoshi"
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "今吉なおき公式サイト｜霧島市情報ポータル",
+      "url": "https://imayoshinaoki.fun",
+      "description": "霧島市の最新情報・イベント・地域ニュースを毎日お届けする情報ポータルサイト",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://imayoshinaoki.fun/topics/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --green:        #1E5C32;
+            --green-light:  #2E7D46;
+            --green-pale:   #EAF4EE;
+            --green-dark:   #163F24;
+            --red:          #C94B2C;
+            --red-pale:     #FAEEE9;
+            --gold:         #C5930A;
+            --gold-pale:    #FDF6E3;
+            --dark:         #1A2218;
+            --text:         #2D3829;
+            --text-light:   #6B7564;
+            --bg:           #F9FAF7;
+            --white:        #FFFFFF;
+            --border:       #DDE5D8;
+            --shadow:       0 4px 24px rgba(30,92,50,0.10);
+        }
+
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        img { max-width: 100%; display: block; }
+        a { text-decoration: none; color: inherit; }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+        .section { padding: 80px 0; }
+        .section-label {
+            font-size: 11px; font-weight: 700; letter-spacing: 0.25em;
+            text-transform: uppercase; color: var(--green); margin-bottom: 10px;
+        }
+        .section-title {
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(24px, 4vw, 36px);
+            font-weight: 700; color: var(--dark); line-height: 1.4; margin-bottom: 14px;
+        }
+        .section-desc { font-size: 15px; color: var(--text-light); max-width: 580px; line-height: 1.85; }
+
+        /* ── Header ── */
+        #header {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(255,255,255,0.97); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border); transition: box-shadow 0.3s;
+        }
+        #header.scrolled { box-shadow: 0 2px 24px rgba(30,92,50,0.10); }
+        .header-inner {
+            display: flex; align-items: center;
+            justify-content: space-between; height: 68px;
+        }
+        .logo { display: flex; align-items: center; gap: 10px; }
+        .logo-mark {
+            width: 38px; height: 38px; background: var(--green);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: #fff; font-family: 'Noto Serif JP', serif; font-size: 14px; font-weight: 700;
+            flex-shrink: 0;
+        }
+        .logo-text { font-family: 'Noto Serif JP', serif; font-size: 17px; font-weight: 700; color: var(--dark); line-height: 1.2; }
+        .logo-sub { font-size: 10px; color: var(--text-light); font-weight: 400; font-family: 'Noto Sans JP', sans-serif; }
+        nav ul { display: flex; align-items: center; list-style: none; gap: 28px; }
+        nav a { font-size: 13px; font-weight: 500; color: var(--text); position: relative; padding-bottom: 3px; }
+        nav a::after {
+            content: ''; position: absolute; bottom: 0; left: 0;
+            width: 0; height: 2px; background: var(--green); transition: width 0.3s;
+        }
+        nav a:hover::after { width: 100%; }
+        .nav-cta {
+            background: var(--green); color: #fff !important; padding: 9px 20px;
+            border-radius: 50px; font-size: 13px; font-weight: 700;
+            transition: all 0.3s; white-space: nowrap;
+        }
+        .nav-cta:hover { background: var(--green-light); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(30,92,50,0.25); }
+        .nav-cta::after { display: none; }
+
+        /* Hamburger */
+        .hamburger {
+            display: none; flex-direction: column; gap: 5px;
+            background: none; border: none; cursor: pointer; padding: 6px; z-index: 1100;
+        }
+        .hamburger span { display: block; width: 24px; height: 2px; background: var(--dark); transition: all 0.3s; border-radius: 2px; }
+        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        .mobile-menu {
+            display: none; position: fixed; top: 68px; left: 0; right: 0; bottom: 0;
+            background: rgba(255,255,255,0.98); padding: 32px 24px; z-index: 999;
+            flex-direction: column; gap: 0;
+        }
+        .mobile-menu.open { display: flex; }
+        .mobile-menu a {
+            display: block; padding: 16px 0; font-size: 16px; font-weight: 500;
+            border-bottom: 1px solid var(--border); color: var(--dark);
+        }
+        .mobile-menu .nav-cta {
+            margin-top: 24px; text-align: center; border-radius: 50px;
+            padding: 14px 20px; display: block; border: none;
+        }
+
+        /* ── Hero ── */
+        #hero {
+            padding-top: 68px; min-height: 100vh;
+            background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 50%, #2E7D46 100%);
+            display: flex; align-items: center; position: relative; overflow: hidden;
+        }
+        #hero::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .hero-inner {
+            position: relative; z-index: 1;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+            padding: 80px 0;
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+            color: rgba(255,255,255,0.9); font-size: 12px; font-weight: 500;
+            padding: 6px 16px; border-radius: 50px; margin-bottom: 24px;
+            letter-spacing: 0.05em;
+        }
+        .hero-badge-dot { width: 6px; height: 6px; background: #6BE89A; border-radius: 50%; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+        .hero-title {
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(30px, 5vw, 52px);
+            font-weight: 700; color: #fff; line-height: 1.3; margin-bottom: 20px;
+        }
+        .hero-title em { color: #A8E6C0; font-style: normal; }
+        .hero-desc { font-size: 15px; color: rgba(255,255,255,0.8); line-height: 1.9; margin-bottom: 36px; }
+        .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+        .btn-white {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: #fff; color: var(--green); padding: 13px 28px;
+            border-radius: 50px; font-weight: 700; font-size: 14px;
+            transition: all 0.3s; box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+        .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
+        .btn-outline-white {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: transparent; color: #fff;
+            border: 2px solid rgba(255,255,255,0.5);
+            padding: 11px 24px; border-radius: 50px; font-weight: 700; font-size: 14px;
+            transition: all 0.3s;
+        }
+        .btn-outline-white:hover { background: rgba(255,255,255,0.1); border-color: #fff; }
+        .hero-stats {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 40px;
+        }
+        .hero-stat {
+            background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 16px; padding: 20px; backdrop-filter: blur(4px);
+        }
+        .hero-stat-num {
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(22px, 3vw, 30px); font-weight: 700; color: #fff; margin-bottom: 4px;
+        }
+        .hero-stat-label { font-size: 11px; color: rgba(255,255,255,0.7); font-weight: 500; }
+        .hero-visual {
+            display: flex; flex-direction: column; gap: 16px; align-items: center;
+        }
+        .hero-card-stack {
+            position: relative; width: 100%; max-width: 360px;
+        }
+        .hero-card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px; padding: 20px 24px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+        }
+        .hero-card-title { font-size: 13px; font-weight: 700; color: var(--dark); margin-bottom: 10px; }
+        .hero-card-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+        .hero-card-list li {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 13px; color: var(--text);
+        }
+        .hero-card-list li::before { content: '▶'; color: var(--green); font-size: 9px; }
+        .hero-card-2 {
+            background: rgba(197,147,10,0.95);
+            margin-top: 16px; padding: 16px 20px;
+        }
+        .hero-card-2-label { font-size: 11px; color: rgba(255,255,255,0.8); margin-bottom: 6px; font-weight: 600; letter-spacing: 0.1em; }
+        .hero-card-2-text { font-size: 15px; font-weight: 700; color: #fff; }
+
+        /* ── Kirishima News ── */
+        #kirishima-news { background: var(--white); }
+        .news-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 40px;
+        }
+        .news-card {
+            border: 1px solid var(--border); border-radius: 16px;
+            padding: 20px; transition: all 0.3s; position: relative; overflow: hidden;
+        }
+        .news-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0;
+            height: 3px; background: var(--green); transform: scaleX(0);
+            transform-origin: left; transition: transform 0.3s;
+        }
+        .news-card:hover { box-shadow: var(--shadow); transform: translateY(-3px); border-color: var(--green-pale); }
+        .news-card:hover::before { transform: scaleX(1); }
+        .news-source {
+            display: inline-block; padding: 3px 10px; border-radius: 50px;
+            font-size: 10px; font-weight: 700; margin-bottom: 10px; letter-spacing: 0.05em;
+        }
+        .source-city { background: var(--green-pale); color: var(--green); }
+        .source-kirinavi { background: var(--gold-pale); color: var(--gold); }
+        .source-mypl { background: var(--red-pale); color: var(--red); }
+        .source-fb { background: #E7F0FD; color: #1877F2; }
+        .source-ig { background: #FDF0F7; color: #C13584; }
+        .news-date { font-size: 12px; color: var(--text-light); margin-bottom: 8px; }
+        .news-card-title {
+            font-size: 14px; font-weight: 600; color: var(--dark);
+            line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical; overflow: hidden;
+        }
+        .news-card-title a:hover { color: var(--green); }
+        .news-loading { text-align: center; padding: 40px; color: var(--text-light); font-size: 14px; }
+        .news-more { text-align: right; margin-top: 24px; }
+        .btn-text { color: var(--green); font-size: 14px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; }
+        .btn-text:hover { text-decoration: underline; }
+
+        /* ── Calendar Preview ── */
+        #calendar-preview { background: var(--bg); }
+        .calendar-wrap {
+            display: grid; grid-template-columns: 1fr 360px; gap: 40px;
+            align-items: start; margin-top: 40px;
+        }
+        .calendar-container {
+            background: var(--white); border-radius: 20px;
+            padding: 24px; box-shadow: var(--shadow); border: 1px solid var(--border);
+        }
+        .upcoming-events { background: var(--white); border-radius: 20px; padding: 24px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+        .upcoming-title { font-size: 13px; font-weight: 700; color: var(--dark); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+        .event-item {
+            display: flex; gap: 12px; align-items: flex-start;
+            padding: 12px 0; border-bottom: 1px solid var(--border);
+        }
+        .event-item:last-child { border-bottom: none; }
+        .event-date-box {
+            flex-shrink: 0; width: 44px; height: 44px;
+            background: var(--green-pale); border-radius: 10px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .event-month { font-size: 10px; color: var(--green); font-weight: 700; }
+        .event-day { font-size: 18px; font-weight: 700; color: var(--green); line-height: 1; }
+        .event-info-title { font-size: 13px; font-weight: 600; color: var(--dark); line-height: 1.5; margin-bottom: 4px; }
+        .event-source-badge { font-size: 10px; color: var(--text-light); }
+        .loading-placeholder { display: flex; flex-direction: column; gap: 16px; }
+        .loading-item {
+            display: flex; gap: 12px;
+        }
+        .loading-box { background: #eee; border-radius: 10px; animation: shimmer 1.5s infinite; }
+        @keyframes shimmer {
+            0%,100% { opacity: 0.6; } 50% { opacity: 1; }
+        }
+        /* FullCalendar Overrides */
+        .fc .fc-toolbar-title { font-family: 'Noto Serif JP', serif; font-size: 16px; color: var(--dark); }
+        .fc .fc-button-primary { background: var(--green); border-color: var(--green); }
+        .fc .fc-button-primary:hover { background: var(--green-light); border-color: var(--green-light); }
+        .fc .fc-day-today { background: var(--green-pale) !important; }
+        .fc .fc-event { background: var(--green); border-color: var(--green); font-size: 11px; }
+
+        /* ── Topics ── */
+        #topics { background: var(--white); }
+        .topics-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 32px; }
+        .topics-filters { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 20px; }
+        .filter-btn {
+            padding: 6px 16px; border-radius: 50px; font-size: 12px; font-weight: 700;
+            border: 1.5px solid var(--border); background: transparent; cursor: pointer;
+            color: var(--text-light); transition: all 0.2s;
+        }
+        .filter-btn.active, .filter-btn:hover { border-color: var(--green); color: var(--green); background: var(--green-pale); }
+        .topics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .topic-card {
+            border: 1px solid var(--border); border-radius: 16px;
+            padding: 20px; transition: all 0.3s;
+        }
+        .topic-card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
+        .topic-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+        .topic-date { font-size: 12px; color: var(--text-light); }
+        .topic-title { font-size: 14px; font-weight: 600; color: var(--dark); line-height: 1.65; margin-bottom: 10px; }
+        .topic-excerpt { font-size: 13px; color: var(--text-light); line-height: 1.7; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+        /* ── Facilities ── */
+        #facilities { background: var(--bg); }
+        .facilities-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
+        .facility-card {
+            border-radius: 24px; overflow: hidden; background: var(--white);
+            box-shadow: var(--shadow); transition: all 0.3s; border: 1px solid var(--border);
+        }
+        .facility-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(30,92,50,0.15); }
+        .facility-thumb {
+            height: 180px; display: flex; align-items: center; justify-content: center;
+            font-size: 48px; position: relative; overflow: hidden;
+        }
+        .facility-thumb-er { background: linear-gradient(135deg, #1A2218, #2E3B2A); }
+        .facility-thumb-kb { background: linear-gradient(135deg, #1B3A5C, #2B5FA0); }
+        .facility-thumb-mz { background: linear-gradient(135deg, #5C3B1B, #A06B2B); }
+        .facility-emoji { font-size: 56px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3)); }
+        .facility-body { padding: 24px; }
+        .facility-tag {
+            display: inline-block; padding: 3px 12px; border-radius: 50px;
+            font-size: 11px; font-weight: 700; margin-bottom: 12px; letter-spacing: 0.05em;
+        }
+        .tag-music { background: #EEF0FF; color: #4B5BD4; }
+        .tag-space { background: #E7F4FD; color: #1B7EC4; }
+        .tag-living { background: #FEF0E3; color: #C47024; }
+        .facility-name {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 20px; font-weight: 700; color: var(--dark); margin-bottom: 10px;
+        }
+        .facility-desc { font-size: 13px; color: var(--text-light); line-height: 1.75; margin-bottom: 20px; }
+        .facility-features { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+        .feat-badge {
+            font-size: 11px; padding: 3px 10px; background: var(--green-pale);
+            color: var(--green); border-radius: 50px; font-weight: 500;
+        }
+        .btn-facility {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: var(--green); color: #fff; padding: 10px 20px;
+            border-radius: 50px; font-size: 13px; font-weight: 700;
+            transition: all 0.3s; width: 100%; justify-content: center;
+        }
+        .btn-facility:hover { background: var(--green-light); transform: translateY(-1px); }
+        .facility-recruit {
+            margin-top: 10px; text-align: center;
+            font-size: 12px; color: var(--red); font-weight: 700;
+        }
+
+        /* ── Kirishimabito Banner ── */
+        #kirishimabito-banner {
+            background: linear-gradient(135deg, var(--dark) 0%, #2D4830 100%);
+            padding: 80px 0; position: relative; overflow: hidden;
+        }
+        #kirishimabito-banner::before {
+            content: 'キリシマビト';
+            position: absolute; right: -20px; top: 50%; transform: translateY(-50%);
+            font-family: 'Noto Serif JP', serif; font-size: 120px; font-weight: 700;
+            color: rgba(255,255,255,0.04); white-space: nowrap; pointer-events: none;
+        }
+        .banner-inner {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+        }
+        .banner-label { font-size: 11px; letter-spacing: 0.3em; color: var(--gold); font-weight: 700; margin-bottom: 16px; text-transform: uppercase; }
+        .banner-title {
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(24px, 4vw, 36px); font-weight: 700; color: #fff; line-height: 1.4; margin-bottom: 20px;
+        }
+        .banner-desc { font-size: 14px; color: rgba(255,255,255,0.75); line-height: 1.9; margin-bottom: 32px; }
+        .banner-pills { display: flex; gap: 10px; flex-wrap: wrap; }
+        .banner-pill {
+            padding: 6px 16px; border: 1px solid rgba(255,255,255,0.3);
+            color: rgba(255,255,255,0.8); border-radius: 50px; font-size: 12px; font-weight: 500;
+        }
+        .banner-visual {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+        }
+        .banner-card {
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 16px; padding: 20px; text-align: center;
+        }
+        .banner-card-icon { font-size: 32px; margin-bottom: 8px; }
+        .banner-card-title { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+        .banner-card-sub { font-size: 11px; color: rgba(255,255,255,0.6); }
+        .btn-gold {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--gold); color: #fff; padding: 13px 28px;
+            border-radius: 50px; font-weight: 700; font-size: 14px;
+            transition: all 0.3s; margin-top: 28px;
+            box-shadow: 0 4px 20px rgba(197,147,10,0.4);
+        }
+        .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(197,147,10,0.5); }
+
+        /* ── About ── */
+        #about { background: var(--white); }
+        .about-inner {
+            display: grid; grid-template-columns: 280px 1fr; gap: 60px; align-items: start; margin-top: 40px;
+        }
+        .about-photo {
+            width: 240px; height: 240px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--green-pale), #C8E6D0);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 72px; margin: 0 auto 20px;
+            border: 4px solid var(--green-pale);
+        }
+        .about-meta-name {
+            text-align: center;
+            font-family: 'Noto Serif JP', serif; font-size: 22px; font-weight: 700; color: var(--dark);
+        }
+        .about-meta-title { text-align: center; font-size: 12px; color: var(--text-light); margin-top: 4px; }
+        .about-content-title {
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(20px, 3vw, 26px); font-weight: 700; color: var(--dark); margin-bottom: 16px;
+        }
+        .about-text { font-size: 15px; color: var(--text); line-height: 1.9; margin-bottom: 12px; }
+        .about-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+        .about-tag {
+            padding: 5px 14px; border: 1.5px solid var(--green);
+            color: var(--green); border-radius: 50px; font-size: 12px; font-weight: 600;
+        }
+        .about-history { margin-top: 28px; }
+        .history-item {
+            display: flex; gap: 16px; padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .history-year { font-size: 13px; font-weight: 700; color: var(--green); white-space: nowrap; min-width: 60px; }
+        .history-desc { font-size: 13px; color: var(--text); line-height: 1.6; }
+
+        /* ── Contact CTA ── */
+        #contact-cta {
+            background: linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%);
+            padding: 80px 0; text-align: center;
+        }
+        .cta-title {
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(22px, 4vw, 32px); font-weight: 700; color: #fff; margin-bottom: 16px;
+        }
+        .cta-desc { font-size: 15px; color: rgba(255,255,255,0.85); margin-bottom: 32px; }
+        .cta-btns { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+
+        /* ── Footer ── */
+        #footer { background: var(--dark); color: rgba(255,255,255,0.8); padding: 60px 0 32px; }
+        .footer-grid {
+            display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 48px;
+        }
+        .footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+        .footer-logo-mark {
+            width: 36px; height: 36px; background: var(--green); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: #fff; font-family: 'Noto Serif JP', serif; font-size: 13px; font-weight: 700;
+        }
+        .footer-logo-name { font-family: 'Noto Serif JP', serif; font-size: 15px; font-weight: 700; color: #fff; }
+        .footer-desc { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.8; margin-bottom: 20px; }
+        .footer-sns { display: flex; gap: 12px; }
+        .footer-sns a {
+            width: 36px; height: 36px; border-radius: 50%;
+            background: rgba(255,255,255,0.1); display: flex; align-items: center;
+            justify-content: center; font-size: 14px; transition: background 0.2s;
+        }
+        .footer-sns a:hover { background: var(--green); }
+        .footer-col-title { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.5); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 16px; }
+        .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        .footer-links a { font-size: 13px; color: rgba(255,255,255,0.65); transition: color 0.2s; }
+        .footer-links a:hover { color: #fff; }
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px;
+            display: flex; align-items: center; justify-content: space-between;
+            font-size: 12px; color: rgba(255,255,255,0.4); flex-wrap: wrap; gap: 12px;
+        }
+        .footer-bottom-links { display: flex; gap: 20px; }
+        .footer-bottom-links a { color: rgba(255,255,255,0.4); }
+        .footer-bottom-links a:hover { color: rgba(255,255,255,0.7); }
+
+        /* ── Animations ── */
+        .fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        /* ── Responsive ── */
+        @media (max-width: 1024px) {
+            .facilities-grid { grid-template-columns: repeat(2, 1fr); }
+            .news-grid { grid-template-columns: repeat(2, 1fr); }
+            .topics-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+        }
+
+        @media (max-width: 768px) {
+            nav { display: none; }
+            .hamburger { display: flex; }
+            .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+            .hero-visual { display: none; }
+            .hero-stats { grid-template-columns: 1fr 1fr; }
+            .calendar-wrap { grid-template-columns: 1fr; }
+            .about-inner { grid-template-columns: 1fr; }
+            .about-photo { width: 180px; height: 180px; font-size: 56px; }
+            .banner-inner { grid-template-columns: 1fr; }
+            .banner-visual { display: none; }
+        }
+
+        @media (max-width: 640px) {
+            .container { padding: 0 16px; }
+            .section { padding: 56px 0; }
+            .news-grid, .topics-grid, .facilities-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .hero-stats { grid-template-columns: 1fr 1fr; }
+            .cta-btns { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ══════════════ HEADER ══════════════ -->
+<header id="header">
+    <div class="container">
+        <div class="header-inner">
+            <a href="/" class="logo" aria-label="今吉なおき 公式サイト トップへ">
+                <div class="logo-mark">今</div>
+                <div>
+                    <div class="logo-text">今吉なおき</div>
+                    <div class="logo-sub">霧島市情報ポータル</div>
+                </div>
+            </a>
+            <nav aria-label="グローバルナビゲーション">
+                <ul>
+                    <li><a href="#kirishima-news">霧島情報</a></li>
+                    <li><a href="events/">イベント</a></li>
+                    <li><a href="#facilities">施設</a></li>
+                    <li><a href="topics/">トピックス</a></li>
+                    <li><a href="#about">プロフィール</a></li>
+                    <li><a href="contact/" class="nav-cta">お問い合わせ</a></li>
+                </ul>
+            </nav>
+            <button class="hamburger" id="hamburger" aria-label="メニューを開く" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- Mobile Menu -->
+<nav class="mobile-menu" id="mobileMenu" aria-label="モバイルナビゲーション">
+    <a href="#kirishima-news">霧島情報</a>
+    <a href="events/">イベントカレンダー</a>
+    <a href="#facilities">施設紹介</a>
+    <a href="topics/">トピックス</a>
+    <a href="#about">今吉なおきについて</a>
+    <a href="#kirishimabito-banner">キリシマビト</a>
+    <a href="contact/" class="nav-cta">お問い合わせ</a>
+</nav>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section id="hero" aria-labelledby="hero-title">
+    <div class="container">
+        <div class="hero-inner">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="hero-badge-dot"></span>
+                    毎日自動更新中 — 霧島市最新情報
+                </div>
+                <h1 class="hero-title" id="hero-title">
+                    霧島の<em>今</em>と<em>未来</em>を<br>つなぐ場所
+                </h1>
+                <p class="hero-desc">
+                    元霧島市役所職員・元市議会議員の今吉直樹が<br>
+                    霧島市の最新情報・イベント・地域の魅力を<br>
+                    毎日お届けします。
+                </p>
+                <div class="hero-btns">
+                    <a href="events/" class="btn-white">
+                        📅 イベントを見る
+                    </a>
+                    <a href="topics/" class="btn-outline-white">
+                        📰 最新トピックス
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <div class="hero-stat-num">3サイト</div>
+                        <div class="hero-stat-label">毎日自動収集</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-num">17年</div>
+                        <div class="hero-stat-label">市役所勤務経験</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-num">3施設</div>
+                        <div class="hero-stat-label">霧島市内拠点</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-num">毎日</div>
+                        <div class="hero-stat-label">情報更新</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual" aria-hidden="true">
+                <div class="hero-card-stack">
+                    <div class="hero-card">
+                        <div class="hero-card-title">🗾 今日の霧島市情報</div>
+                        <ul class="hero-card-list">
+                            <li>霧島市役所からのお知らせ</li>
+                            <li>きりなびのイベント情報</li>
+                            <li>まいぷれの地域ニュース</li>
+                            <li>今吉直樹のSNS投稿</li>
+                        </ul>
+                    </div>
+                    <div class="hero-card hero-card-2">
+                        <div class="hero-card-2-label">SCHEDULE</div>
+                        <div class="hero-card-2-text">📅 今月のイベントを確認する →</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════ KIRISHIMA NEWS ══════════════ -->
+<section id="kirishima-news" class="section" aria-labelledby="news-title">
+    <div class="container">
+        <div class="fade-up">
+            <p class="section-label">Kirishima Info</p>
+            <h2 class="section-title" id="news-title">霧島市の最新情報</h2>
+            <p class="section-desc">霧島市役所・きりなび・まいぷれから毎日自動収集した最新ニュース・お知らせをお届けします。</p>
+        </div>
+        <div class="news-grid" id="newsGrid">
+            <div class="news-loading">情報を読み込み中…</div>
+        </div>
+        <div class="news-more fade-up">
+            <a href="topics/" class="btn-text">すべての情報を見る →</a>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════ CALENDAR PREVIEW ══════════════ -->
+<section id="calendar-preview" class="section" aria-labelledby="calendar-title">
+    <div class="container">
+        <div class="fade-up">
+            <p class="section-label">Event Calendar</p>
+            <h2 class="section-title" id="calendar-title">霧島市イベントカレンダー</h2>
+            <p class="section-desc">霧島市内のイベント・行事情報をカレンダーで確認できます。毎日自動更新。</p>
+        </div>
+        <div class="calendar-wrap fade-up">
+            <div class="calendar-container">
+                <div id="miniCalendar"></div>
+            </div>
+            <div>
+                <div class="upcoming-events">
+                    <div class="upcoming-title">📅 直近のイベント</div>
+                    <div id="upcomingEvents">
+                        <div class="loading-placeholder">
+                            <div class="loading-item">
+                                <div class="loading-box" style="width:44px;height:44px;flex-shrink:0;"></div>
+                                <div style="flex:1">
+                                    <div class="loading-box" style="height:12px;width:80%;margin-bottom:6px;border-radius:4px;"></div>
+                                    <div class="loading-box" style="height:12px;width:60%;border-radius:4px;"></div>
+                                </div>
+                            </div>
+                            <div class="loading-item">
+                                <div class="loading-box" style="width:44px;height:44px;flex-shrink:0;"></div>
+                                <div style="flex:1">
+                                    <div class="loading-box" style="height:12px;width:70%;margin-bottom:6px;border-radius:4px;"></div>
+                                    <div class="loading-box" style="height:12px;width:50%;border-radius:4px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align:center;margin-top:16px;">
+                    <a href="events/" class="btn-text">カレンダーを全画面で見る →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════ TOPICS ══════════════ -->
+<section id="topics" class="section" aria-labelledby="topics-title">
+    <div class="container">
+        <div class="topics-header fade-up">
+            <div>
+                <p class="section-label">Topics</p>
+                <h2 class="section-title" id="topics-title">トピックス</h2>
+            </div>
+        </div>
+        <div class="topics-filters fade-up" id="topicFilters">
+            <button class="filter-btn active" data-filter="all" onclick="filterTopics('all', this)">すべて</button>
+            <button class="filter-btn" data-filter="kirishima-news" onclick="filterTopics('kirishima-news', this)">市役所</button>
+            <button class="filter-btn" data-filter="kirinavi" onclick="filterTopics('kirinavi', this)">きりなび</button>
+            <button class="filter-btn" data-filter="mypl" onclick="filterTopics('mypl', this)">まいぷれ</button>
+            <button class="filter-btn" data-filter="social-post" onclick="filterTopics('social-post', this)">SNS</button>
+        </div>
+        <div class="topics-grid fade-up" id="topicsGrid" style="margin-top:24px;">
+            <div class="news-loading">トピックスを読み込み中…</div>
+        </div>
+        <div class="news-more fade-up">
+            <a href="topics/" class="btn-text">すべてのトピックスを見る →</a>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════ FACILITIES ══════════════ -->
+<section id="facilities" class="section" aria-labelledby="facilities-title">
+    <div class="container">
+        <div class="fade-up">
+            <p class="section-label">Facilities</p>
+            <h2 class="section-title" id="facilities-title">霧島の拠点施設</h2>
+            <p class="section-desc">今吉直樹が関わる霧島市内の3つの施設をご紹介。イベント開催・スペース活用・入居者募集中！</p>
+        </div>
+        <div class="facilities-grid">
+            <!-- イージーライダーハウス -->
+            <div class="facility-card fade-up">
+                <div class="facility-thumb facility-thumb-er" aria-hidden="true">
+                    <span class="facility-emoji">🎸</span>
+                </div>
+                <div class="facility-body">
+                    <span class="facility-tag tag-music">ライブハウス・小劇場</span>
+                    <h3 class="facility-name">イージーライダーハウス</h3>
+                    <p class="facility-desc">
+                        霧島市唯一のライブハウス・小劇場。音楽ライブ・講演会・演劇・ワークショップなどの貸切利用が可能。収容50〜70名。
+                    </p>
+                    <div class="facility-features">
+                        <span class="feat-badge">収容50〜70名</span>
+                        <span class="feat-badge">音響・照明完備</span>
+                        <span class="feat-badge">平日¥35,000〜</span>
+                        <span class="feat-badge">貸切可</span>
+                    </div>
+                    <a href="easy-rider/" class="btn-facility">詳細・予約を見る</a>
+                    <p class="facility-recruit">🎤 イベント主催者募集中！</p>
+                </div>
+            </div>
+
+            <!-- こくぶベース -->
+            <div class="facility-card fade-up" style="transition-delay: 0.1s">
+                <div class="facility-thumb facility-thumb-kb" aria-hidden="true">
+                    <span class="facility-emoji">🏢</span>
+                </div>
+                <div class="facility-body">
+                    <span class="facility-tag tag-space">コミュニティスペース</span>
+                    <h3 class="facility-name">こくぶベース</h3>
+                    <p class="facility-desc">
+                        国分エリアのコミュニティスペース。ミーティング・勉強会・ワークショップ・少人数イベントなど多目的に活用できます。
+                    </p>
+                    <div class="facility-features">
+                        <span class="feat-badge">多目的利用</span>
+                        <span class="feat-badge">国分エリア</span>
+                        <span class="feat-badge">Wi-Fi完備</span>
+                    </div>
+                    <a href="kokubu-base/" class="btn-facility">詳細・予約を見る</a>
+                </div>
+            </div>
+
+            <!-- みぞべーす -->
+            <div class="facility-card fade-up" style="transition-delay: 0.2s">
+                <div class="facility-thumb facility-thumb-mz" aria-hidden="true">
+                    <span class="facility-emoji">🏠</span>
+                </div>
+                <div class="facility-body">
+                    <span class="facility-tag tag-living">コミュニティ・居住</span>
+                    <h3 class="facility-name">みぞべーす</h3>
+                    <p class="facility-desc">
+                        霧島のコミュニティハブ。スペース利用だけでなく、入居者・テナント様も募集中！霧島で新しい挑戦をしたい方はぜひ。
+                    </p>
+                    <div class="facility-features">
+                        <span class="feat-badge">入居者募集</span>
+                        <span class="feat-badge">テナント募集</span>
+                        <span class="feat-badge">コミュニティ</span>
+                    </div>
+                    <a href="mizo-base/" class="btn-facility">詳細・入居を相談する</a>
+                    <p class="facility-recruit">🏡 入居者・テナント募集中！</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════ KIRISHIMABITO BANNER ══════════════ -->
+<section id="kirishimabito-banner" aria-labelledby="kirishimabito-title">
+    <div class="container">
+        <div class="banner-inner">
+            <div>
+                <p class="banner-label">Kirishimabito</p>
+                <h2 class="banner-title" id="kirishimabito-title">
+                    一人ひとりの夢から、<br>霧島の未来を作る
+                </h2>
+                <p class="banner-desc">
+                    「キリシマビト」は、霧島に関わるすべての人が主役になれるコミュニティプロジェクトです。
+                    ゆめカタチラボを通じて、夢を持つ仲間をつなぎ、地域に新しい価値を生み出します。
+                </p>
+                <div class="banner-pills">
+                    <span class="banner-pill">🌱 コミュニティ</span>
+                    <span class="banner-pill">💡 起業支援</span>
+                    <span class="banner-pill">🤝 地域連携</span>
+                    <span class="banner-pill">🎯 夢実現</span>
+                </div>
+                <a href="kirishimabito/" class="btn-gold">キリシマビトを詳しく見る →</a>
+            </div>
+            <div class="banner-visual" aria-hidden="true">
+                <div class="banner-card">
+                    <div class="banner-card-icon">🌿</div>
+                    <div class="banner-card-title">ゆめカタチラボ</div>
+                    <div class="banner-card-sub">月会費 ¥3,000〜</div>
+                </div>
+                <div class="banner-card">
+                    <div class="banner-card-icon">🎸</div>
+                    <div class="banner-card-title">イージーライダー</div>
+                    <div class="banner-card-sub">霧島唯一のライブハウス</div>
+                </div>
+                <div class="banner-card">
+                    <div class="banner-card-icon">📋</div>
+                    <div class="banner-card-title">補助金サポート</div>
+                    <div class="banner-card-sub">採択率90%超</div>
+                </div>
+                <div class="banner-card">
+                    <div class="banner-card-icon">🏡</div>
+                    <div class="banner-card-title">スペース活用</div>
+                    <div class="banner-card-sub">3拠点</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════ ABOUT ══════════════ -->
+<section id="about" class="section" aria-labelledby="about-title">
+    <div class="container">
+        <div class="fade-up">
+            <p class="section-label">Profile</p>
+            <h2 class="section-title" id="about-title">今吉なおきについて</h2>
+        </div>
+        <div class="about-inner fade-up">
+            <div style="text-align:center;">
+                <div class="about-photo" aria-hidden="true">🙂</div>
+                <div class="about-meta-name">今吉 直樹</div>
+                <div class="about-meta-title">ふるさとプロデューサー</div>
+                <div style="margin-top:16px; display:flex; flex-direction:column; gap:8px; align-items:center;">
+                    <a href="https://www.facebook.com/naoki.imayoshi" target="_blank" rel="noopener"
+                       style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#1877F2;font-weight:600;">
+                        📘 Facebook
+                    </a>
+                    <a href="https://www.instagram.com/naoki_imayoshi" target="_blank" rel="noopener"
+                       style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#C13584;font-weight:600;">
+                        📷 Instagram
+                    </a>
+                </div>
+            </div>
+            <div class="about-content">
+                <h3 class="about-content-title">
+                    霧島を愛し、霧島の未来を<br>地域の仲間と共に創る
+                </h3>
+                <p class="about-text">
+                    鹿児島県霧島市出身。霧島市役所に17年間勤務し、地域の現場を知り尽くした行政マン。
+                    その後、霧島市議会議員を経て、株式会社FoodBaseを設立。
+                    元市役所・議員の経験を活かした補助金コンサルティングは採択率90%超を誇り、
+                    累計3億円以上の補助金採択実績を持つ。
+                </p>
+                <p class="about-text">
+                    現在は「キリシマビト」として、霧島を拠点に地域課題解決・起業支援・コミュニティ形成に取り組む。
+                    イージーライダーハウス（ライブハウス）・こくぶベース・みぞべーすの3施設を運営し、
+                    「ゆめカタチラボ」コミュニティを通じて霧島に関わる人たちをつないでいる。
+                </p>
+                <div class="about-tags">
+                    <span class="about-tag">元霧島市役所（17年）</span>
+                    <span class="about-tag">元市議会議員</span>
+                    <span class="about-tag">補助金コンサルタント</span>
+                    <span class="about-tag">ふるさとプロデューサー</span>
+                    <span class="about-tag">FoodBase代表</span>
+                </div>
+                <div class="about-history">
+                    <div class="history-item">
+                        <div class="history-year">〜2020</div>
+                        <div class="history-desc">霧島市役所に17年間勤務。農業振興・地域づくり・産業振興を担当</div>
+                    </div>
+                    <div class="history-item">
+                        <div class="history-year">2020</div>
+                        <div class="history-desc">霧島市議会議員就任。市民目線で地域課題の解決に取り組む</div>
+                    </div>
+                    <div class="history-item">
+                        <div class="history-year">2022</div>
+                        <div class="history-desc">株式会社FoodBase設立。補助金申請サポート・経営コンサルを開始</div>
+                    </div>
+                    <div class="history-item">
+                        <div class="history-year">2025〜</div>
+                        <div class="history-desc">キリシマビト・ゆめカタチラボを発足。3施設の運営を開始</div>
+                    </div>
+                </div>
+                <div style="margin-top:24px;">
+                    <a href="about/" class="btn-text">プロフィール詳細を見る →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════ CONTACT CTA ══════════════ -->
+<section id="contact-cta" aria-labelledby="cta-title">
+    <div class="container">
+        <div class="fade-up">
+            <h2 class="cta-title" id="cta-title">霧島に関すること、なんでもご相談ください</h2>
+            <p class="cta-desc">施設の貸切・入居相談・補助金相談・取材依頼など、お気軽にどうぞ</p>
+            <div class="cta-btns">
+                <a href="contact/" class="btn-white">📩 お問い合わせフォーム</a>
+                <a href="reservation/" class="btn-outline-white">📅 予約・利用申し込み</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer id="footer" aria-label="フッター">
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <div class="footer-logo">
+                    <div class="footer-logo-mark">今</div>
+                    <div class="footer-logo-name">今吉なおき公式サイト</div>
+                </div>
+                <p class="footer-desc">
+                    霧島市の最新情報・イベント・地域ニュースを毎日お届けする情報ポータルサイト。
+                    元市役所職員・元市議会議員の今吉直樹が運営しています。
+                </p>
+                <div class="footer-sns">
+                    <a href="https://www.facebook.com/naoki.imayoshi" target="_blank" rel="noopener" aria-label="Facebook">📘</a>
+                    <a href="https://www.instagram.com/naoki_imayoshi" target="_blank" rel="noopener" aria-label="Instagram">📷</a>
+                </div>
+            </div>
+            <div>
+                <div class="footer-col-title">霧島情報</div>
+                <ul class="footer-links">
+                    <li><a href="#kirishima-news">最新ニュース</a></li>
+                    <li><a href="events/">イベントカレンダー</a></li>
+                    <li><a href="topics/">トピックス一覧</a></li>
+                </ul>
+            </div>
+            <div>
+                <div class="footer-col-title">施設情報</div>
+                <ul class="footer-links">
+                    <li><a href="easy-rider/">イージーライダーハウス</a></li>
+                    <li><a href="kokubu-base/">こくぶベース</a></li>
+                    <li><a href="mizo-base/">みぞべーす</a></li>
+                    <li><a href="kirishimabito/">キリシマビト</a></li>
+                </ul>
+            </div>
+            <div>
+                <div class="footer-col-title">サイト情報</div>
+                <ul class="footer-links">
+                    <li><a href="about/">プロフィール</a></li>
+                    <li><a href="reservation/">予約・申し込み</a></li>
+                    <li><a href="contact/">お問い合わせ</a></li>
+                    <li><a href="privacy-policy/">プライバシーポリシー</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>© 2025 今吉直樹 / Naoki Imayoshi. All rights reserved.</div>
+            <div class="footer-bottom-links">
+                <a href="privacy-policy/">プライバシーポリシー</a>
+                <a href="contact/">お問い合わせ</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- FullCalendar JS -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+
+<script>
+    // ══ WordPress API 設定 ══
+    // WordPressのURLを設定してください
+    const WP_API = 'https://YOUR-WORDPRESS-URL/wp-json/wp/v2';
+    // カテゴリIDは WordPress 管理画面で確認してください
+    const WP_CAT_NEWS = '2';    // kirishima-news カテゴリID
+    const WP_CAT_EVENTS = '3';  // events カテゴリID
+    const WP_CAT_SOCIAL = '4';  // social-post カテゴリID
+
+    // ══ Header scroll ══
+    window.addEventListener('scroll', () => {
+        document.getElementById('header').classList.toggle('scrolled', window.scrollY > 50);
+    }, { passive: true });
+
+    // ══ Hamburger Menu ══
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+        const isOpen = mobileMenu.classList.toggle('open');
+        hamburger.classList.toggle('open', isOpen);
+        hamburger.setAttribute('aria-expanded', isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+    mobileMenu.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+            hamburger.classList.remove('open');
+            hamburger.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+        });
+    });
+
+    // ══ Fade-up Animation ══
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, i) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => entry.target.classList.add('visible'), i * 80);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // ══ Source badge helper ══
+    function sourceBadge(source) {
+        const map = {
+            'city':    { cls: 'source-city',    label: '市役所' },
+            'kirinavi':{ cls: 'source-kirinavi', label: 'きりなび' },
+            'mypl':    { cls: 'source-mypl',     label: 'まいぷれ' },
+            'facebook':{ cls: 'source-fb',       label: 'Facebook' },
+            'instagram':{ cls: 'source-ig',      label: 'Instagram' },
+        };
+        const s = map[source] || { cls: 'source-city', label: source || '霧島' };
+        return `<span class="news-source ${s.cls}">${s.label}</span>`;
+    }
+
+    // ══ Format date ══
+    function fmtDate(dateStr) {
+        const d = new Date(dateStr);
+        return `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`;
+    }
+
+    // ══ Get meta value ══
+    function getMeta(post, key, fallback = '') {
+        return (post.meta && post.meta[key]) ? post.meta[key] : fallback;
+    }
+
+    // ══ Load News ══
+    async function loadNews() {
+        const grid = document.getElementById('newsGrid');
+        // WP_API が設定されていない場合はサンプルを表示
+        if (WP_API.includes('YOUR-WORDPRESS')) {
+            grid.innerHTML = renderSampleNews();
+            return;
+        }
+        try {
+            const url = `${WP_API}/posts?categories=${WP_CAT_NEWS}&per_page=6&_fields=id,title,date,link,meta&orderby=date&order=desc`;
+            const res = await fetch(url);
+            if (!res.ok) throw new Error('API Error');
+            const posts = await res.json();
+            if (!posts.length) { grid.innerHTML = renderSampleNews(); return; }
+            grid.innerHTML = posts.map(p => `
+                <div class="news-card fade-up">
+                    ${sourceBadge(getMeta(p, 'source_site', 'city'))}
+                    <div class="news-date">${fmtDate(p.date)}</div>
+                    <div class="news-card-title">
+                        <a href="${getMeta(p, 'source_url', p.link)}" target="_blank" rel="noopener">
+                            ${p.title.rendered}
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+            document.querySelectorAll('#newsGrid .fade-up').forEach(el => observer.observe(el));
+        } catch(e) {
+            grid.innerHTML = renderSampleNews();
+        }
+    }
+
+    function renderSampleNews() {
+        const samples = [
+            { source: 'city',     date: '2026年3月2日',  title: '霧島市役所からのお知らせ（自動更新されます）', url: 'https://www.city.kirishima.lg.jp/' },
+            { source: 'kirinavi', date: '2026年3月2日',  title: 'きりなびのイベント情報（自動更新されます）', url: 'https://kirinavi.com/' },
+            { source: 'mypl',     date: '2026年3月1日',  title: 'まいぷれ霧島の地域ニュース（自動更新されます）', url: 'https://kirishima.mypl.net/' },
+            { source: 'city',     date: '2026年3月1日',  title: '霧島市役所 行政情報（自動更新されます）', url: 'https://www.city.kirishima.lg.jp/' },
+            { source: 'facebook', date: '2026年3月1日',  title: '今吉直樹のFacebook投稿（API連携後に自動掲載）', url: 'https://www.facebook.com/naoki.imayoshi' },
+            { source: 'instagram',date: '2026年2月28日', title: '今吉直樹のInstagram投稿（API連携後に自動掲載）', url: 'https://www.instagram.com/naoki_imayoshi' },
+        ];
+        return samples.map(s => `
+            <div class="news-card">
+                ${sourceBadge(s.source)}
+                <div class="news-date">${s.date}</div>
+                <div class="news-card-title">
+                    <a href="${s.url}" target="_blank" rel="noopener">${s.title}</a>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // ══ Load Topics ══
+    let allTopics = [];
+    async function loadTopics() {
+        const grid = document.getElementById('topicsGrid');
+        if (WP_API.includes('YOUR-WORDPRESS')) {
+            allTopics = getSampleTopics();
+            renderTopics('all');
+            return;
+        }
+        try {
+            const cats = [WP_CAT_NEWS, WP_CAT_EVENTS, WP_CAT_SOCIAL].join(',');
+            const url = `${WP_API}/posts?categories=${cats}&per_page=6&_fields=id,title,date,excerpt,link,meta,categories&orderby=date&order=desc`;
+            const res = await fetch(url);
+            if (!res.ok) throw new Error();
+            allTopics = await res.json();
+            renderTopics('all');
+        } catch(e) {
+            allTopics = getSampleTopics();
+            renderTopics('all');
+        }
+    }
+
+    function getSampleTopics() {
+        return [
+            { id:1, title:{rendered:'霧島神宮春まつり開催のお知らせ'}, date:'2026-03-02', excerpt:{rendered:'霧島神宮で春まつりが開催されます…'}, link:'#', meta:{source_site:'city'} },
+            { id:2, title:{rendered:'きりなびイベント：霧島アートの森 春の企画展'}, date:'2026-03-01', excerpt:{rendered:'霧島アートの森で春の企画展が始まります…'}, link:'#', meta:{source_site:'kirinavi'} },
+            { id:3, title:{rendered:'まいぷれ掲載：霧島の新しいお店がオープン'}, date:'2026-03-01', excerpt:{rendered:'霧島市内に新しいお店がオープンしました…'}, link:'#', meta:{source_site:'mypl'} },
+            { id:4, title:{rendered:'今吉直樹Facebook：ゆめカタチラボ定例会レポート'}, date:'2026-02-28', excerpt:{rendered:'先日のゆめカタチラボ定例会の様子をお伝えします…'}, link:'#', meta:{source_site:'facebook'} },
+            { id:5, title:{rendered:'霧島市観光情報：桜の開花予想'}, date:'2026-02-27', excerpt:{rendered:'今年の霧島市の桜開花予想が発表されました…'}, link:'#', meta:{source_site:'city'} },
+            { id:6, title:{rendered:'イージーライダーハウス：次回ライブ情報'}, date:'2026-02-26', excerpt:{rendered:'今月のイベント情報をお知らせします…'}, link:'#', meta:{source_site:'instagram'} },
+        ];
+    }
+
+    function renderTopics(filter) {
+        const grid = document.getElementById('topicsGrid');
+        const items = filter === 'all' ? allTopics : allTopics.filter(p => {
+            const s = getMeta(p, 'source_site', '');
+            if (filter === 'social-post') return ['facebook','instagram'].includes(s);
+            return s === filter;
+        });
+        if (!items.length) { grid.innerHTML = '<div class="news-loading">該当するトピックスがありません</div>'; return; }
+        grid.innerHTML = items.slice(0,6).map(p => `
+            <div class="topic-card">
+                <div class="topic-meta">
+                    ${sourceBadge(getMeta(p,'source_site','city'))}
+                    <span class="topic-date">${fmtDate(p.date)}</span>
+                </div>
+                <div class="topic-title">
+                    <a href="${getMeta(p,'source_url',p.link)}" target="_blank" rel="noopener">
+                        ${p.title.rendered}
+                    </a>
+                </div>
+                <div class="topic-excerpt">${p.excerpt.rendered.replace(/<[^>]+>/g,'')}</div>
+            </div>
+        `).join('');
+    }
+
+    function filterTopics(filter, btn) {
+        document.querySelectorAll('#topicFilters .filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderTopics(filter);
+    }
+
+    // ══ FullCalendar ══
+    function initCalendar(events) {
+        const el = document.getElementById('miniCalendar');
+        if (!el) return;
+        new FullCalendar.Calendar(el, {
+            locale: 'ja',
+            initialView: 'dayGridMonth',
+            height: 'auto',
+            headerToolbar: { left: 'prev', center: 'title', right: 'next' },
+            events: events,
+            eventClick: (info) => { if (info.event.url) { info.jsEvent.preventDefault(); window.open(info.event.url, '_blank'); } },
+            eventColor: '#1E5C32',
+        }).render();
+    }
+
+    function renderUpcomingEvents(events) {
+        const el = document.getElementById('upcomingEvents');
+        if (!events.length) { el.innerHTML = '<p style="font-size:13px;color:var(--text-light);padding:16px 0;">イベント情報がありません</p>'; return; }
+        const now = new Date();
+        const upcoming = events
+            .filter(e => new Date(e.start) >= now)
+            .sort((a,b) => new Date(a.start) - new Date(b.start))
+            .slice(0,5);
+        el.innerHTML = upcoming.map(e => {
+            const d = new Date(e.start);
+            return `
+                <div class="event-item">
+                    <div class="event-date-box">
+                        <span class="event-month">${d.getMonth()+1}月</span>
+                        <span class="event-day">${d.getDate()}</span>
+                    </div>
+                    <div>
+                        <div class="event-info-title"><a href="${e.url||'events/'}" target="_blank" rel="noopener">${e.title}</a></div>
+                        <div class="event-source-badge">${e.source||'霧島市'}</div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    async function loadEvents() {
+        const sampleEvents = [
+            { title: '霧島神宮春まつり', start: '2026-03-15', url: 'https://www.city.kirishima.lg.jp/', source: '霧島市役所' },
+            { title: 'イージーライダーハウス ライブイベント', start: '2026-03-20', url: 'easy-rider/', source: 'イージーライダーハウス' },
+            { title: '霧島アートの森 春の企画展', start: '2026-03-21', url: 'https://kirinavi.com/', source: 'きりなび' },
+            { title: 'ゆめカタチラボ 3月定例会', start: '2026-03-25', url: 'kirishimabito/', source: 'キリシマビト' },
+            { title: '霧島市まちづくりシンポジウム', start: '2026-04-05', url: 'https://www.city.kirishima.lg.jp/', source: '霧島市役所' },
+        ];
+        if (WP_API.includes('YOUR-WORDPRESS')) {
+            initCalendar(sampleEvents);
+            renderUpcomingEvents(sampleEvents);
+            return;
+        }
+        try {
+            const url = `${WP_API}/posts?categories=${WP_CAT_EVENTS}&per_page=50&_fields=id,title,date,link,meta&orderby=date&order=asc`;
+            const res = await fetch(url);
+            if (!res.ok) throw new Error();
+            const posts = await res.json();
+            const events = posts.map(p => ({
+                title: p.title.rendered,
+                start: getMeta(p, 'event_date', p.date),
+                url: getMeta(p, 'source_url', p.link),
+                source: getMeta(p, 'source_site', '霧島市'),
+            }));
+            initCalendar(events.length ? events : sampleEvents);
+            renderUpcomingEvents(events.length ? events : sampleEvents);
+        } catch(e) {
+            initCalendar(sampleEvents);
+            renderUpcomingEvents(sampleEvents);
+        }
+    }
+
+    // ══ Init ══
+    document.addEventListener('DOMContentLoaded', () => {
+        loadNews();
+        loadTopics();
+        loadEvents();
+    });
+</script>
+
+</body>
+</html>

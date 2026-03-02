@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "imayoshinaoki-website",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["/Users/naokiimayoshi/Library/Mobile Documents/iCloud~md~obsidian/Documents/霧島市長への道/imayoshinaoki-website/scripts/serve.py", "3456"],
+      "port": 3456
+    }
+  ]
+}
