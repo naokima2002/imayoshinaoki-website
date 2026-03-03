@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Kirishima News Scraper
+Kirishima News Scraper (Improved Version)
 
 Scrapes information from:
 - Kirishima City Hall (https://www.city.kirishima.lg.jp/)
@@ -17,6 +17,7 @@ import re
 from datetime import datetime, timedelta
 from urllib.parse import urljoin
 import logging
+import time
 
 import requests
 from bs4 import BeautifulSoup
@@ -52,8 +53,13 @@ CONFIG = {
             'source': 'myplace',
             'name': 'まいぷれ霧島',
         },
-    }
+    },
+    'timeout': 15,  # seconds
+    'retries': 2,
 }
+
+# Better User-Agent
+USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
 
 # ===== Scrapers =====
 
@@ -85,10 +91,17 @@ class KirishimaCityScraper:
     
     def __init__(self):
         self.config = CONFIG['scrapers']['kirishima_city']
-        self.session = requests.Session()
-        self.session.headers.update({
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+        self.session = self._create_session()
+    
+    def _create_session(self):
+        """Create a requests session with proper configuration."""
+        session = requests.Session()
+        session.headers.update({
+            'User-Agent': USER_AGENT,
+            'Accept': 'application/rss+xml, application/atom+xml, */*',
+            'Accept-Language': 'ja-JP,ja;q=0.9',
         })
+        return session
     
     def scrape(self):
         """Scrape news from Kirishima City Hall."""
@@ -96,19 +109,30 @@ class KirishimaCityScraper:
         try:
             logger.info(f"Scraping {self.config['name']}...")
             items.extend(self._scrape_rss())
+            logger.info(f"✓ Scraped {len(items)} items from {self.config['name']}")
         except Exception as e:
-            logger.error(f"Error scraping {self.config['name']}: {e}")
+            logger.error(f"✗ Error scraping {self.config['name']}: {e}", exc_info=True)
         return items
     
     def _scrape_rss(self):
         """Scrape RSS feed from Kirishima City Hall."""
         items = []
         try:
-            feed = feedparser.parse(self.config['rss'])
+            logger.debug(f"Fetching RSS feed: {self.config['rss']}")
+            # feedparser doesn't use requests, so we fetch manually
+            response = self.session.get(
+                self.config['rss'],
+                timeout=CONFIG['timeout']
+            )
+            response.raise_for_status()
+            
+            feed = feedparser.parse(response.content)
+            logger.debug(f"Feed contains {len(feed.entries)} entries")
+            
             for entry in feed.entries[:10]:  # Get last 10 items
                 try:
-                    title = entry.get('title', '')
-                    link = entry.get('link', '')
+                    title = entry.get('title', '').strip()
+                    link = entry.get('link', '').strip()
                     published = entry.get('published', '')
                     
                     if not title or not link:
@@ -121,7 +145,7 @@ class KirishimaCityScraper:
                     description = entry.get('summary', '')
                     if description:
                         # Remove HTML tags
-                        description = BeautifulSoup(description, 'html.parser').get_text()
+                        description = BeautifulSoup(description, 'html.parser').get_text().strip()
                         description = description[:200]  # Limit to 200 chars
                     
                     item = NewsItem(
@@ -133,12 +157,12 @@ class KirishimaCityScraper:
                         description=description,
                     )
                     items.append(item)
+                    logger.debug(f"Parsed: {title}")
                 except Exception as e:
                     logger.warning(f"Error parsing RSS entry: {e}")
-            
-            logger.info(f"Scraped {len(items)} items from {self.config['name']}")
+        
         except Exception as e:
-            logger.error(f"Error scraping RSS feed: {e}")
+            logger.error(f"✗ Error scraping RSS feed: {e}", exc_info=True)
         
         return items
     
@@ -156,83 +180,98 @@ class KirinaviScraper:
     
     def __init__(self):
         self.config = CONFIG['scrapers']['kirinavi']
-        self.session = requests.Session()
-        self.session.headers.update({
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+        self.session = self._create_session()
+    
+    def _create_session(self):
+        """Create a requests session with proper configuration."""
+        session = requests.Session()
+        session.headers.update({
+            'User-Agent': USER_AGENT,
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            'Accept-Language': 'ja-JP,ja;q=0.9',
         })
+        return session
     
     def scrape(self):
         """Scrape events from Kirinavi."""
         items = []
         try:
             logger.info(f"Scraping {self.config['name']}...")
-            # Kirinavi scraping - simplified for HTML structure
             items.extend(self._scrape_html())
+            logger.info(f"✓ Scraped {len(items)} items from {self.config['name']}")
         except Exception as e:
-            logger.error(f"Error scraping {self.config['name']}: {e}")
+            logger.error(f"✗ Error scraping {self.config['name']}: {e}", exc_info=True)
         return items
     
     def _scrape_html(self):
         """Scrape HTML page."""
         items = []
         try:
-            response = self.session.get(self.config['url'], timeout=10)
+            logger.debug(f"Fetching: {self.config['url']}")
+            response = self.session.get(
+                self.config['url'],
+                timeout=CONFIG['timeout'],
+                allow_redirects=True
+            )
+            response.raise_for_status()
             response.encoding = 'utf-8'
-            soup = BeautifulSoup(response.content, 'html.parser')
             
-            # Note: Actual selectors depend on Kirinavi's HTML structure
-            # This is a placeholder - adjust selectors based on actual site structure
-            articles = soup.find_all('article', class_='event-item', limit=10)
+            soup = BeautifulSoup(response.content, 'html.parser')
+            logger.debug(f"Page size: {len(response.content)} bytes")
+            
+            # Try multiple selectors for robustness
+            articles = soup.find_all(['article', 'div'], class_=re.compile(r'event|news|item', re.I), limit=10)
+            logger.debug(f"Found {len(articles)} elements")
             
             for article in articles:
                 try:
-                    title_elem = article.find('h3', class_='event-title')
-                    link_elem = article.find('a')
-                    date_elem = article.find('span', class_='event-date')
+                    # Extract title
+                    title_elem = article.find(['h2', 'h3', 'h4', 'a'])
+                    title = title_elem.get_text(strip=True) if title_elem else None
                     
-                    if not (title_elem and link_elem):
+                    # Extract link
+                    link_elem = article.find('a', href=True)
+                    link = link_elem.get('href') if link_elem else None
+                    
+                    if not title or not link:
                         continue
                     
-                    title = title_elem.get_text(strip=True)
-                    link = urljoin(self.config['url'], link_elem.get('href', ''))
-                    date_str = date_elem.get_text(strip=True) if date_elem else ''
+                    # Make absolute URL
+                    link = urljoin(self.config['url'], link)
                     
                     item = NewsItem(
                         title=title,
                         url=link,
                         source=self.config['source'],
                         source_name=self.config['name'],
-                        date=self._parse_date(date_str),
                         category='events',
                     )
                     items.append(item)
+                    logger.debug(f"Parsed: {title}")
                 except Exception as e:
-                    logger.warning(f"Error parsing Kirinavi entry: {e}")
-            
-            logger.info(f"Scraped {len(items)} items from {self.config['name']}")
+                    logger.warning(f"Error parsing article: {e}")
+        
         except Exception as e:
-            logger.error(f"Error scraping HTML: {e}")
+            logger.error(f"✗ Error scraping HTML: {e}", exc_info=True)
         
         return items
-    
-    def _parse_date(self, date_str):
-        """Parse date string."""
-        if not date_str:
-            return datetime.now()
-        try:
-            return dateutil_parser.parse(date_str)
-        except:
-            return datetime.now()
 
 class MyplaceScraper:
     """Scrapes news from Myplace Kirishima."""
     
     def __init__(self):
         self.config = CONFIG['scrapers']['myplace']
-        self.session = requests.Session()
-        self.session.headers.update({
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+        self.session = self._create_session()
+    
+    def _create_session(self):
+        """Create a requests session with proper configuration."""
+        session = requests.Session()
+        session.headers.update({
+            'User-Agent': USER_AGENT,
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            'Accept-Language': 'ja-JP,ja;q=0.9',
         })
+        return session
     
     def scrape(self):
         """Scrape news from Myplace."""
@@ -240,32 +279,46 @@ class MyplaceScraper:
         try:
             logger.info(f"Scraping {self.config['name']}...")
             items.extend(self._scrape_html())
+            logger.info(f"✓ Scraped {len(items)} items from {self.config['name']}")
         except Exception as e:
-            logger.error(f"Error scraping {self.config['name']}: {e}")
+            logger.error(f"✗ Error scraping {self.config['name']}: {e}", exc_info=True)
         return items
     
     def _scrape_html(self):
         """Scrape HTML page."""
         items = []
         try:
-            response = self.session.get(self.config['url'], timeout=10)
+            logger.debug(f"Fetching: {self.config['url']}")
+            response = self.session.get(
+                self.config['url'],
+                timeout=CONFIG['timeout'],
+                allow_redirects=True
+            )
+            response.raise_for_status()
             response.encoding = 'utf-8'
-            soup = BeautifulSoup(response.content, 'html.parser')
             
-            # Note: Actual selectors depend on Myplace's HTML structure
-            # This is a placeholder - adjust selectors based on actual site structure
-            articles = soup.find_all('div', class_='news-item', limit=10)
+            soup = BeautifulSoup(response.content, 'html.parser')
+            logger.debug(f"Page size: {len(response.content)} bytes")
+            
+            # Try multiple selectors for robustness
+            articles = soup.find_all(['article', 'div'], class_=re.compile(r'news|item|event', re.I), limit=10)
+            logger.debug(f"Found {len(articles)} elements")
             
             for article in articles:
                 try:
-                    title_elem = article.find('h4', class_='news-title')
-                    link_elem = article.find('a')
+                    # Extract title
+                    title_elem = article.find(['h2', 'h3', 'h4', 'a'])
+                    title = title_elem.get_text(strip=True) if title_elem else None
                     
-                    if not (title_elem and link_elem):
+                    # Extract link
+                    link_elem = article.find('a', href=True)
+                    link = link_elem.get('href') if link_elem else None
+                    
+                    if not title or not link:
                         continue
                     
-                    title = title_elem.get_text(strip=True)
-                    link = urljoin(self.config['url'], link_elem.get('href', ''))
+                    # Make absolute URL
+                    link = urljoin(self.config['url'], link)
                     
                     item = NewsItem(
                         title=title,
@@ -274,12 +327,12 @@ class MyplaceScraper:
                         source_name=self.config['name'],
                     )
                     items.append(item)
+                    logger.debug(f"Parsed: {title}")
                 except Exception as e:
-                    logger.warning(f"Error parsing Myplace entry: {e}")
-            
-            logger.info(f"Scraped {len(items)} items from {self.config['name']}")
+                    logger.warning(f"Error parsing article: {e}")
+        
         except Exception as e:
-            logger.error(f"Error scraping HTML: {e}")
+            logger.error(f"✗ Error scraping HTML: {e}", exc_info=True)
         
         return items
 
@@ -299,10 +352,12 @@ def scrape_all():
         try:
             items = scraper.scrape()
             all_items.extend(items)
+            # Be polite to servers
+            time.sleep(1)
         except Exception as e:
-            logger.error(f"Error running scraper: {e}")
+            logger.error(f"Error running scraper: {e}", exc_info=True)
     
-    logger.info(f"Total items scraped: {len(all_items)}")
+    logger.info(f"=== Total items scraped: {len(all_items)} ===")
     return all_items
 
 def deduplicate(items):
@@ -315,12 +370,14 @@ def deduplicate(items):
             unique_items.append(item)
             seen_urls.add(item.url)
     
-    logger.info(f"Deduplicated: {len(items)} -> {len(unique_items)}")
+    logger.info(f"Deduplicated: {len(items)} → {len(unique_items)}")
     return unique_items
 
 def main():
     """Main function."""
+    logger.info("=" * 50)
     logger.info("Starting Kirishima News Scraper")
+    logger.info("=" * 50)
     
     # Scrape all sources
     items = scrape_all()
@@ -334,6 +391,7 @@ def main():
         json.dump([item.to_dict() for item in items], f, ensure_ascii=False, indent=2)
     
     logger.info(f"Saved {len(items)} items to {output_file}")
+    logger.info("=" * 50)
     
     return items
 
