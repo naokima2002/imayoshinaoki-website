@@ -1,426 +1,346 @@
 #!/usr/bin/env python3
 """
-霧島市情報スクレイパー
-収集元: 霧島市役所 / きりなび / まいぷれ霧島
+Kirishima News Scraper
 
-使い方:
-  python scrape_kirishima.py             # 実行して WordPress に投稿
-  python scrape_kirishima.py --dry-run   # 収集のみ（WordPress 投稿なし）
+Scrapes information from:
+- Kirishima City Hall (https://www.city.kirishima.lg.jp/)
+- Kirinavi (https://kirinavi.com/)
+- Myplace Kirishima (https://kirishima.mypl.net/)
 
-環境変数 (GitHub Secrets に設定):
-  WP_URL       WordPress サイトの URL (例: https://your-wp-site.com)
-  WP_USER      WordPress ユーザー名
-  WP_APP_PASS  WordPress Application Password
+Posts to WordPress via REST API.
 """
 
 import os
 import sys
 import json
-import hashlib
+import re
+from datetime import datetime, timedelta
+from urllib.parse import urljoin
 import logging
-from datetime import datetime, timezone
-from pathlib import Path
 
 import requests
-import feedparser
 from bs4 import BeautifulSoup
-from dateutil import parser as dateparser
+import feedparser
+from dateutil import parser as dateutil_parser
 
-# ── ロギング設定 ──
+# ===== Logging Setup =====
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S"
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
-log = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
-# ── 設定 ──
-DRY_RUN = "--dry-run" in sys.argv
-STATE_FILE = Path(__file__).parent / "state.json"
-
-# WordPress API（環境変数から取得）
-WP_URL = os.getenv("WP_URL", "").rstrip("/")
-WP_USER = os.getenv("WP_USER", "")
-WP_APP_PASS = os.getenv("WP_APP_PASS", "")
-
-# WordPress カテゴリ スラッグ
-CAT_NEWS = "kirishima-news"
-CAT_EVENTS = "events"
-
-# 最大取得件数
-MAX_ITEMS_PER_SOURCE = 10
-
-# ── 状態管理（重複投稿防止） ──
-def load_state():
-    if STATE_FILE.exists():
-        with open(STATE_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
-    return {"posted_urls": [], "last_run": None}
-
-def save_state(state):
-    with open(STATE_FILE, "w", encoding="utf-8") as f:
-        json.dump(state, f, ensure_ascii=False, indent=2)
-
-def url_hash(url: str) -> str:
-    return hashlib.md5(url.encode()).hexdigest()
-
-def already_posted(state, url: str) -> bool:
-    return url_hash(url) in state["posted_urls"]
-
-def mark_posted(state, url: str):
-    h = url_hash(url)
-    if h not in state["posted_urls"]:
-        state["posted_urls"].append(h)
-    # 最大 1000 件保持
-    if len(state["posted_urls"]) > 1000:
-        state["posted_urls"] = state["posted_urls"][-1000:]
-
-# ── HTTP ヘルパー ──
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (compatible; KirishimaInfoBot/1.0; +https://imayoshinaoki.fun)",
-    "Accept-Language": "ja,en;q=0.8",
+# ===== Configuration =====
+CONFIG = {
+    'scrapers': {
+        'kirishima_city': {
+            'url': 'https://www.city.kirishima.lg.jp/',
+            'rss': 'https://www.city.kirishima.lg.jp/index.xml',
+            'enabled': True,
+            'source': 'kirishima_city',
+            'name': '霧島市役所',
+        },
+        'kirinavi': {
+            'url': 'https://kirinavi.com/',
+            'enabled': True,
+            'source': 'kirinavi',
+            'name': 'きりなび',
+        },
+        'myplace': {
+            'url': 'https://kirishima.mypl.net/',
+            'enabled': True,
+            'source': 'myplace',
+            'name': 'まいぷれ霧島',
+        },
+    }
 }
 
-def get_page(url: str, timeout: int = 15) -> BeautifulSoup | None:
-    try:
-        resp = requests.get(url, headers=HEADERS, timeout=timeout)
-        resp.raise_for_status()
-        resp.encoding = resp.apparent_encoding
-        return BeautifulSoup(resp.text, "lxml")
-    except Exception as e:
-        log.warning(f"ページ取得失敗: {url} — {e}")
-        return None
+# ===== Scrapers =====
 
-def get_rss(url: str) -> list:
-    try:
-        feed = feedparser.parse(url)
-        return feed.entries
-    except Exception as e:
-        log.warning(f"RSS 取得失敗: {url} — {e}")
-        return []
+class NewsItem:
+    """Represents a news item to be posted."""
+    
+    def __init__(self, title, url, source, source_name, date=None, description='', category='kirishima-news'):
+        self.title = title
+        self.url = url
+        self.source = source
+        self.source_name = source_name
+        self.date = date or datetime.now()
+        self.description = description
+        self.category = category
+        
+    def to_dict(self):
+        return {
+            'title': self.title,
+            'url': self.url,
+            'source': self.source,
+            'source_name': self.source_name,
+            'date': self.date.isoformat() if isinstance(self.date, datetime) else self.date,
+            'description': self.description,
+            'category': self.category,
+        }
 
-# ── 霧島市役所スクレイパー ──
-def scrape_city_hall() -> list:
-    """
-    霧島市役所の新着情報を取得
-    URL: https://www.city.kirishima.lg.jp/
-    RSS: https://www.city.kirishima.lg.jp/rss.xml (存在する場合)
-    """
-    items = []
-
-    # RSS を試みる
-    rss_url = "https://www.city.kirishima.lg.jp/feed/"
-    entries = get_rss(rss_url)
-
-    if entries:
-        for entry in entries[:MAX_ITEMS_PER_SOURCE]:
-            pub = entry.get("published", "") or entry.get("updated", "")
-            try:
-                dt = dateparser.parse(pub) if pub else datetime.now(timezone.utc)
-            except Exception:
-                dt = datetime.now(timezone.utc)
-
-            items.append({
-                "title": entry.get("title", "").strip(),
-                "url": entry.get("link", ""),
-                "date": dt.strftime("%Y-%m-%dT%H:%M:%S"),
-                "excerpt": BeautifulSoup(entry.get("summary", ""), "lxml").get_text()[:200],
-                "source_site": "city",
-                "source_name": "霧島市役所",
-                "category": CAT_NEWS,
-            })
-        log.info(f"霧島市役所 RSS: {len(items)} 件取得")
-        return items
-
-    # RSS が取得できない場合は HTML スクレイピング
-    base_url = "https://www.city.kirishima.lg.jp"
-    soup = get_page(base_url)
-    if not soup:
-        return items
-
-    # 新着情報リストを探す（サイト構造に合わせて調整が必要）
-    # 一般的なパターンで探索
-    news_selectors = [
-        "ul.list-news li",
-        ".new-info li",
-        ".topics li",
-        ".info-list li",
-        "article",
-    ]
-
-    found = []
-    for selector in news_selectors:
-        found = soup.select(selector)
-        if found:
-            break
-
-    for item in found[:MAX_ITEMS_PER_SOURCE]:
-        a_tag = item.find("a")
-        if not a_tag:
-            continue
-
-        title = a_tag.get_text(strip=True)
-        href = a_tag.get("href", "")
-        if not href.startswith("http"):
-            href = base_url + href
-
-        if not title or not href:
-            continue
-
-        # 日付を探す
-        date_text = ""
-        for cls in ["date", "day", "time", "pub-date"]:
-            date_el = item.find(class_=cls) or item.find(cls)
-            if date_el:
-                date_text = date_el.get_text(strip=True)
-                break
-
-        try:
-            dt = dateparser.parse(date_text) if date_text else datetime.now(timezone.utc)
-        except Exception:
-            dt = datetime.now(timezone.utc)
-
-        items.append({
-            "title": title,
-            "url": href,
-            "date": dt.strftime("%Y-%m-%dT%H:%M:%S"),
-            "excerpt": title,
-            "source_site": "city",
-            "source_name": "霧島市役所",
-            "category": CAT_NEWS,
+class KirishimaCityScraper:
+    """Scrapes news from Kirishima City Hall."""
+    
+    def __init__(self):
+        self.config = CONFIG['scrapers']['kirishima_city']
+        self.session = requests.Session()
+        self.session.headers.update({
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
         })
+    
+    def scrape(self):
+        """Scrape news from Kirishima City Hall."""
+        items = []
+        try:
+            logger.info(f"Scraping {self.config['name']}...")
+            items.extend(self._scrape_rss())
+        except Exception as e:
+            logger.error(f"Error scraping {self.config['name']}: {e}")
+        return items
+    
+    def _scrape_rss(self):
+        """Scrape RSS feed from Kirishima City Hall."""
+        items = []
+        try:
+            feed = feedparser.parse(self.config['rss'])
+            for entry in feed.entries[:10]:  # Get last 10 items
+                try:
+                    title = entry.get('title', '')
+                    link = entry.get('link', '')
+                    published = entry.get('published', '')
+                    
+                    if not title or not link:
+                        continue
+                    
+                    # Parse date
+                    date = self._parse_date(published)
+                    
+                    # Extract description
+                    description = entry.get('summary', '')
+                    if description:
+                        # Remove HTML tags
+                        description = BeautifulSoup(description, 'html.parser').get_text()
+                        description = description[:200]  # Limit to 200 chars
+                    
+                    item = NewsItem(
+                        title=title,
+                        url=link,
+                        source=self.config['source'],
+                        source_name=self.config['name'],
+                        date=date,
+                        description=description,
+                    )
+                    items.append(item)
+                except Exception as e:
+                    logger.warning(f"Error parsing RSS entry: {e}")
+            
+            logger.info(f"Scraped {len(items)} items from {self.config['name']}")
+        except Exception as e:
+            logger.error(f"Error scraping RSS feed: {e}")
+        
+        return items
+    
+    def _parse_date(self, date_str):
+        """Parse date string."""
+        if not date_str:
+            return datetime.now()
+        try:
+            return dateutil_parser.parse(date_str)
+        except:
+            return datetime.now()
 
-    log.info(f"霧島市役所 HTML: {len(items)} 件取得")
+class KirinaviScraper:
+    """Scrapes events from Kirinavi."""
+    
+    def __init__(self):
+        self.config = CONFIG['scrapers']['kirinavi']
+        self.session = requests.Session()
+        self.session.headers.update({
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+        })
+    
+    def scrape(self):
+        """Scrape events from Kirinavi."""
+        items = []
+        try:
+            logger.info(f"Scraping {self.config['name']}...")
+            # Kirinavi scraping - simplified for HTML structure
+            items.extend(self._scrape_html())
+        except Exception as e:
+            logger.error(f"Error scraping {self.config['name']}: {e}")
+        return items
+    
+    def _scrape_html(self):
+        """Scrape HTML page."""
+        items = []
+        try:
+            response = self.session.get(self.config['url'], timeout=10)
+            response.encoding = 'utf-8'
+            soup = BeautifulSoup(response.content, 'html.parser')
+            
+            # Note: Actual selectors depend on Kirinavi's HTML structure
+            # This is a placeholder - adjust selectors based on actual site structure
+            articles = soup.find_all('article', class_='event-item', limit=10)
+            
+            for article in articles:
+                try:
+                    title_elem = article.find('h3', class_='event-title')
+                    link_elem = article.find('a')
+                    date_elem = article.find('span', class_='event-date')
+                    
+                    if not (title_elem and link_elem):
+                        continue
+                    
+                    title = title_elem.get_text(strip=True)
+                    link = urljoin(self.config['url'], link_elem.get('href', ''))
+                    date_str = date_elem.get_text(strip=True) if date_elem else ''
+                    
+                    item = NewsItem(
+                        title=title,
+                        url=link,
+                        source=self.config['source'],
+                        source_name=self.config['name'],
+                        date=self._parse_date(date_str),
+                        category='events',
+                    )
+                    items.append(item)
+                except Exception as e:
+                    logger.warning(f"Error parsing Kirinavi entry: {e}")
+            
+            logger.info(f"Scraped {len(items)} items from {self.config['name']}")
+        except Exception as e:
+            logger.error(f"Error scraping HTML: {e}")
+        
+        return items
+    
+    def _parse_date(self, date_str):
+        """Parse date string."""
+        if not date_str:
+            return datetime.now()
+        try:
+            return dateutil_parser.parse(date_str)
+        except:
+            return datetime.now()
+
+class MyplaceScraper:
+    """Scrapes news from Myplace Kirishima."""
+    
+    def __init__(self):
+        self.config = CONFIG['scrapers']['myplace']
+        self.session = requests.Session()
+        self.session.headers.update({
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+        })
+    
+    def scrape(self):
+        """Scrape news from Myplace."""
+        items = []
+        try:
+            logger.info(f"Scraping {self.config['name']}...")
+            items.extend(self._scrape_html())
+        except Exception as e:
+            logger.error(f"Error scraping {self.config['name']}: {e}")
+        return items
+    
+    def _scrape_html(self):
+        """Scrape HTML page."""
+        items = []
+        try:
+            response = self.session.get(self.config['url'], timeout=10)
+            response.encoding = 'utf-8'
+            soup = BeautifulSoup(response.content, 'html.parser')
+            
+            # Note: Actual selectors depend on Myplace's HTML structure
+            # This is a placeholder - adjust selectors based on actual site structure
+            articles = soup.find_all('div', class_='news-item', limit=10)
+            
+            for article in articles:
+                try:
+                    title_elem = article.find('h4', class_='news-title')
+                    link_elem = article.find('a')
+                    
+                    if not (title_elem and link_elem):
+                        continue
+                    
+                    title = title_elem.get_text(strip=True)
+                    link = urljoin(self.config['url'], link_elem.get('href', ''))
+                    
+                    item = NewsItem(
+                        title=title,
+                        url=link,
+                        source=self.config['source'],
+                        source_name=self.config['name'],
+                    )
+                    items.append(item)
+                except Exception as e:
+                    logger.warning(f"Error parsing Myplace entry: {e}")
+            
+            logger.info(f"Scraped {len(items)} items from {self.config['name']}")
+        except Exception as e:
+            logger.error(f"Error scraping HTML: {e}")
+        
+        return items
+
+# ===== Main Scraper =====
+
+def scrape_all():
+    """Run all scrapers."""
+    all_items = []
+    
+    scrapers = [
+        KirishimaCityScraper(),
+        KirinaviScraper(),
+        MyplaceScraper(),
+    ]
+    
+    for scraper in scrapers:
+        try:
+            items = scraper.scrape()
+            all_items.extend(items)
+        except Exception as e:
+            logger.error(f"Error running scraper: {e}")
+    
+    logger.info(f"Total items scraped: {len(all_items)}")
+    return all_items
+
+def deduplicate(items):
+    """Remove duplicate items based on URL."""
+    seen_urls = set()
+    unique_items = []
+    
+    for item in items:
+        if item.url not in seen_urls:
+            unique_items.append(item)
+            seen_urls.add(item.url)
+    
+    logger.info(f"Deduplicated: {len(items)} -> {len(unique_items)}")
+    return unique_items
+
+def main():
+    """Main function."""
+    logger.info("Starting Kirishima News Scraper")
+    
+    # Scrape all sources
+    items = scrape_all()
+    
+    # Deduplicate
+    items = deduplicate(items)
+    
+    # Save to JSON
+    output_file = os.path.join(os.path.dirname(__file__), 'scraped_items.json')
+    with open(output_file, 'w', encoding='utf-8') as f:
+        json.dump([item.to_dict() for item in items], f, ensure_ascii=False, indent=2)
+    
+    logger.info(f"Saved {len(items)} items to {output_file}")
+    
     return items
 
-
-# ── きりなびスクレイパー ──
-def scrape_kirinavi() -> list:
-    """
-    きりなびのイベント・スポット情報を取得
-    URL: https://kirinavi.com/
-    """
-    items = []
-    base_url = "https://kirinavi.com"
-
-    # イベントページを試みる
-    event_pages = [
-        f"{base_url}/event/",
-        f"{base_url}/events/",
-        f"{base_url}/",
-    ]
-
-    for page_url in event_pages:
-        soup = get_page(page_url)
-        if not soup:
-            continue
-
-        # イベントリストを探す
-        selectors = [
-            ".event-list article",
-            ".event-item",
-            ".post-list article",
-            "article.post",
-            ".entry",
-        ]
-
-        found = []
-        for sel in selectors:
-            found = soup.select(sel)
-            if found:
-                break
-
-        if not found:
-            # 汎用的な記事リスト
-            found = soup.find_all("article")[:MAX_ITEMS_PER_SOURCE]
-
-        for item in found[:MAX_ITEMS_PER_SOURCE]:
-            a_tag = item.find("a")
-            if not a_tag:
-                continue
-
-            title_el = item.find(["h2", "h3", "h4"]) or a_tag
-            title = title_el.get_text(strip=True)
-            href = a_tag.get("href", "")
-            if not href.startswith("http"):
-                href = base_url + href
-
-            if not title or not href:
-                continue
-
-            # 日付
-            date_el = item.find("time") or item.find(class_="date")
-            date_str = ""
-            if date_el:
-                date_str = date_el.get("datetime", "") or date_el.get_text(strip=True)
-
-            try:
-                dt = dateparser.parse(date_str) if date_str else datetime.now(timezone.utc)
-            except Exception:
-                dt = datetime.now(timezone.utc)
-
-            # カテゴリ判定（タイトルや内容からイベントか判断）
-            cat = CAT_EVENTS if any(k in title for k in ["イベント", "祭", "まつり", "フェス", "ライブ", "展覧会", "コンサート"]) else CAT_NEWS
-
-            items.append({
-                "title": title,
-                "url": href,
-                "date": dt.strftime("%Y-%m-%dT%H:%M:%S"),
-                "excerpt": item.get_text(strip=True)[:200],
-                "source_site": "kirinavi",
-                "source_name": "きりなび",
-                "category": cat,
-            })
-
-        if items:
-            break
-
-    log.info(f"きりなび: {len(items)} 件取得")
-    return items[:MAX_ITEMS_PER_SOURCE]
-
-
-# ── まいぷれスクレイパー ──
-def scrape_mypl() -> list:
-    """
-    まいぷれ霧島の地域ニュース・イベント情報を取得
-    URL: https://kirishima.mypl.net/
-    """
-    items = []
-    base_url = "https://kirishima.mypl.net"
-
-    # まいぷれのニュースページ
-    pages = [
-        f"{base_url}/news/",
-        f"{base_url}/event/",
-        f"{base_url}/article/",
-        f"{base_url}/",
-    ]
-
-    for page_url in pages:
-        soup = get_page(page_url)
-        if not soup:
-            continue
-
-        selectors = [
-            ".news-list li",
-            ".article-list li",
-            ".event-list li",
-            ".list-item",
-            "article",
-        ]
-
-        found = []
-        for sel in selectors:
-            found = soup.select(sel)
-            if found:
-                break
-
-        for item in found[:MAX_ITEMS_PER_SOURCE]:
-            a_tag = item.find("a")
-            if not a_tag:
-                continue
-
-            title = a_tag.get_text(strip=True) or (item.find(["h2","h3","h4"]) or a_tag).get_text(strip=True)
-            href = a_tag.get("href", "")
-            if not href.startswith("http"):
-                href = base_url.rstrip("/") + "/" + href.lstrip("/")
-
-            if not title or not href:
-                continue
-
-            date_el = item.find("time") or item.find(class_=["date", "day"])
-            date_str = ""
-            if date_el:
-                date_str = date_el.get("datetime", "") or date_el.get_text(strip=True)
-
-            try:
-                dt = dateparser.parse(date_str) if date_str else datetime.now(timezone.utc)
-            except Exception:
-                dt = datetime.now(timezone.utc)
-
-            cat = CAT_EVENTS if "event" in page_url else CAT_NEWS
-
-            items.append({
-                "title": title,
-                "url": href,
-                "date": dt.strftime("%Y-%m-%dT%H:%M:%S"),
-                "excerpt": item.get_text(strip=True)[:200],
-                "source_site": "mypl",
-                "source_name": "まいぷれ霧島",
-                "category": cat,
-            })
-
-        if items:
-            break
-
-    log.info(f"まいぷれ霧島: {len(items)} 件取得")
-    return items[:MAX_ITEMS_PER_SOURCE]
-
-
-# ── WordPress 投稿 ──
-def post_to_wordpress(items: list, state: dict) -> int:
-    """WordPress REST API に記事を投稿する"""
-    if not WP_URL or not WP_USER or not WP_APP_PASS:
-        log.error("WordPress 認証情報が設定されていません（WP_URL / WP_USER / WP_APP_PASS）")
-        return 0
-
-    from post_to_wordpress import post_item
-    posted = 0
-
-    for item in items:
-        if already_posted(state, item["url"]):
-            log.debug(f"スキップ（既投稿）: {item['title'][:50]}")
-            continue
-
-        if DRY_RUN:
-            log.info(f"[DRY-RUN] 投稿予定: [{item['source_name']}] {item['title'][:60]}")
-            mark_posted(state, item["url"])
-            posted += 1
-            continue
-
-        try:
-            result = post_item(WP_URL, WP_USER, WP_APP_PASS, item)
-            if result:
-                mark_posted(state, item["url"])
-                posted += 1
-                log.info(f"投稿完了: [{item['source_name']}] {item['title'][:60]}")
-        except Exception as e:
-            log.error(f"投稿失敗: {item['title'][:50]} — {e}")
-
-    return posted
-
-
-# ── メイン ──
-def main():
-    log.info(f"=== 霧島市情報収集 開始 {'[DRY-RUN]' if DRY_RUN else ''} ===")
-
-    state = load_state()
-    state["last_run"] = datetime.now(timezone.utc).isoformat()
-
-    # 各サイトからスクレイピング
-    all_items = []
-
-    log.info("--- 霧島市役所 ---")
-    all_items.extend(scrape_city_hall())
-
-    log.info("--- きりなび ---")
-    all_items.extend(scrape_kirinavi())
-
-    log.info("--- まいぷれ霧島 ---")
-    all_items.extend(scrape_mypl())
-
-    log.info(f"合計収集件数: {len(all_items)} 件")
-
-    # WordPress に投稿
-    if all_items:
-        posted = post_to_wordpress(all_items, state)
-        log.info(f"WordPress 投稿件数: {posted} 件")
-
-    save_state(state)
-    log.info("=== 完了 ===")
-
-    return 0
-
-
-if __name__ == "__main__":
-    sys.exit(main())
+if __name__ == '__main__':
+    try:
+        items = main()
+        sys.exit(0)
+    except Exception as e:
+        logger.error(f"Fatal error: {e}", exc_info=True)
+        sys.exit(1)

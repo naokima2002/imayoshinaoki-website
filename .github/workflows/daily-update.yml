@@ -1,60 +1,64 @@
-name: Daily Kirishima Info Update
+name: Daily Kirishima News Update
 
 on:
   schedule:
-    # 毎日 6:00 AM JST (= UTC 21:00 前日)
+    # Every day at 6:00 AM JST (9:00 PM UTC previous day)
     - cron: '0 21 * * *'
+  
+  # Allow manual trigger
   workflow_dispatch:
-    # 手動実行も可能（GitHub UI の「Run workflow」ボタン）
-    inputs:
-      dry_run:
-        description: 'Dry run (collect only, no WP post)'
-        required: false
-        default: 'false'
-        type: boolean
 
 jobs:
   update:
-    name: Collect & Post Kirishima Info
     runs-on: ubuntu-latest
-    timeout-minutes: 15
-
+    timeout-minutes: 30
+    
     steps:
+      # Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Set up Python 3.11
+      
+      # Setup Python
+      - name: Setup Python 3.11
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
           cache: 'pip'
-          cache-dependency-path: 'scripts/requirements.txt'
-
+      
+      # Install dependencies
       - name: Install dependencies
-        run: pip install -r scripts/requirements.txt
-
-      - name: Run scraper (dry-run)
-        if: ${{ github.event.inputs.dry_run == 'true' }}
-        run: python scripts/scrape_kirishima.py --dry-run
-        env:
-          WP_URL: ${{ secrets.WP_URL }}
-          WP_USER: ${{ secrets.WP_USER }}
-          WP_APP_PASS: ${{ secrets.WP_APP_PASS }}
-
-      - name: Run scraper (post to WordPress)
-        if: ${{ github.event.inputs.dry_run != 'true' }}
-        run: python scripts/scrape_kirishima.py
-        env:
-          WP_URL: ${{ secrets.WP_URL }}
-          WP_USER: ${{ secrets.WP_USER }}
-          WP_APP_PASS: ${{ secrets.WP_APP_PASS }}
-
-      - name: Commit updated state file
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Actions"
-          git add scripts/state.json || true
-          git diff --staged --quiet || git commit -m "chore: update scraper state [skip ci]"
-          git push || true
+          python -m pip install --upgrade pip
+          pip install -r scripts/requirements.txt
+      
+      # Run scraper
+      - name: Run Kirishima News Scraper
+        run: |
+          python scripts/scrape_kirishima.py
+      
+      # Post to WordPress
+      - name: Post to WordPress
+        run: |
+          python scripts/post_to_wordpress.py
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WP_URL: ${{ secrets.WP_URL }}
+          WP_USER: ${{ secrets.WP_USER }}
+          WP_APP_PASS: ${{ secrets.WP_APP_PASS }}
+      
+      # Notify on success
+      - name: Success notification
+        if: success()
+        run: |
+          echo "✓ Daily update completed successfully"
+          echo "Time: $(date)"
+      
+      # Notify on failure
+      - name: Failure notification
+        if: failure()
+        run: |
+          echo "✗ Daily update failed"
+          echo "Time: $(date)"
+          exit 1
+
+# Notifications (optional)
+# You can add Slack or Discord notifications here if needed
