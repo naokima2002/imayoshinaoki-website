@@ -36,63 +36,83 @@ if not all([WP_URL, WP_USER, WP_APP_PASS]):
 
 class WordPressClient:
     """Client for WordPress REST API."""
-    
+
     def __init__(self, url, username, password):
         self.url = url.rstrip('/')
         self.api_url = f"{self.url}/wp-json/wp/v2"
         self.username = username
         self.password = password
-        self.session = requests.Session()
-        
-        # Setup authentication
+
+        # Authenticated session (for POST requests)
         credentials = b64encode(f"{username}:{password}".encode()).decode()
+        self.session = requests.Session()
         self.session.headers.update({
             'Authorization': f'Basic {credentials}',
             'User-Agent': 'Kirishima Auto Poster/1.0',
         })
-    
+
+        # Public session (for GET requests - no auth to avoid 403)
+        self.public_session = requests.Session()
+        self.public_session.headers.update({
+            'User-Agent': 'Kirishima Auto Poster/1.0',
+        })
+
+        # Category ID cache (fetched at startup)
+        self._category_cache = {}
+
     def test_connection(self):
-        """Test WordPress connection."""
+        """Test WordPress connection using public endpoint first."""
         try:
-            response = self.session.get(f"{self.api_url}/posts?per_page=1")
+            # Test public access
+            response = self.public_session.get(f"{self.api_url}/posts?per_page=1", timeout=10)
             if response.status_code == 200:
-                logger.info("✓ WordPress connection successful")
+                logger.info("✓ WordPress public access OK")
+            else:
+                logger.warning(f"WordPress public access: {response.status_code}")
+
+            # Test authenticated access (POST to /posts with dry-run)
+            response = self.session.get(f"{self.api_url}/users/me", timeout=10)
+            if response.status_code == 200:
+                user = response.json()
+                logger.info(f"✓ WordPress authentication OK (user: {user.get('name', 'unknown')})")
                 return True
             else:
-                logger.error(f"✗ WordPress connection failed: {response.status_code}")
-                logger.error(response.text)
+                logger.error(f"✗ WordPress authentication failed: {response.status_code}")
+                logger.error(response.text[:200])
                 return False
         except Exception as e:
             logger.error(f"✗ Connection error: {e}")
             return False
-    
+
     def get_categories(self):
-        """Get all categories."""
+        """Get all categories using public session (no auth)."""
         try:
-            response = self.session.get(f"{self.api_url}/categories?per_page=50")
-            response.raise_for_status()
-            categories = response.json()
-            return {cat['slug']: cat['id'] for cat in categories}
-        except Exception as e:
-            logger.error(f"Error getting categories: {e}")
-            return {}
-    
-    def get_category_id(self, slug):
-        """Get category ID by slug."""
-        try:
-            response = self.session.get(
+            response = self.public_session.get(
                 f"{self.api_url}/categories",
-                params={'slug': slug, 'per_page': 1}
+                params={'per_page': 50},
+                timeout=10
             )
             response.raise_for_status()
             categories = response.json()
-            if categories:
-                return categories[0]['id']
-            else:
-                logger.warning(f"Category '{slug}' not found")
-                return None
+            result = {cat['slug']: cat['id'] for cat in categories}
+            logger.info(f"✓ Categories loaded: {list(result.keys())}")
+            return result
         except Exception as e:
-            logger.error(f"Error getting category ID: {e}")
+            logger.error(f"Error getting categories: {e}")
+            return {}
+
+    def get_category_id(self, slug):
+        """Get category ID by slug using cache."""
+        # Load cache if empty
+        if not self._category_cache:
+            self._category_cache = self.get_categories()
+
+        category_id = self._category_cache.get(slug)
+        if category_id:
+            logger.debug(f"Category '{slug}' → ID {category_id}")
+            return category_id
+        else:
+            logger.warning(f"Category '{slug}' not found in cache: {self._category_cache}")
             return None
     
     def post_exists(self, source_url):
