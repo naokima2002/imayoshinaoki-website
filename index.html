@@ -1185,7 +1185,7 @@
             const res = await fetch(NEWS_JSON + '?_=' + Date.now());
             if (!res.ok) throw new Error();
             const data = await res.json();
-            allTopics = data.items || [];
+            allTopics = (data.items || []).length ? data.items : getSampleTopics();
             renderTopics('all');
         } catch(e) {
             allTopics = getSampleTopics();
