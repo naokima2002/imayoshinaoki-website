@@ -1076,13 +1076,8 @@
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
 
 <script>
-    // ══ WordPress API 設定 ══
-    // WordPressのURLを設定してください
-    const WP_API = 'http://kirishima-bito.jp/wp-json/wp/v2';
-    // カテゴリIDは WordPress 管理画面で確認してください
-    const WP_CAT_NEWS = '2';    // kirishima-news カテゴリID
-    const WP_CAT_EVENTS = '3';  // events カテゴリID
-    const WP_CAT_SOCIAL = '4';  // social-post カテゴリID
+    // ══ Data source ══
+    const NEWS_JSON = './data/news.json';
 
     // ══ Header scroll ══
     window.addEventListener('scroll', () => {
@@ -1121,11 +1116,13 @@
     // ══ Source badge helper ══
     function sourceBadge(source) {
         const map = {
-            'city':    { cls: 'source-city',    label: '市役所' },
-            'kirinavi':{ cls: 'source-kirinavi', label: 'きりなび' },
-            'mypl':    { cls: 'source-mypl',     label: 'まいぷれ' },
-            'facebook':{ cls: 'source-fb',       label: 'Facebook' },
-            'instagram':{ cls: 'source-ig',      label: 'Instagram' },
+            'kirishima_city': { cls: 'source-city',    label: '市役所' },
+            'kirinavi':       { cls: 'source-kirinavi', label: 'きりなび' },
+            'myplace':        { cls: 'source-mypl',     label: 'まいぷれ' },
+            'facebook':       { cls: 'source-fb',       label: 'Facebook' },
+            'instagram':      { cls: 'source-ig',       label: 'Instagram' },
+            'city':           { cls: 'source-city',     label: '市役所' },
+            'mypl':           { cls: 'source-mypl',     label: 'まいぷれ' },
         };
         const s = map[source] || { cls: 'source-city', label: source || '霧島' };
         return `<span class="news-source ${s.cls}">${s.label}</span>`;
@@ -1137,33 +1134,21 @@
         return `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`;
     }
 
-    // ══ Get meta value ══
-    function getMeta(post, key, fallback = '') {
-        return (post.meta && post.meta[key]) ? post.meta[key] : fallback;
-    }
-
     // ══ Load News ══
     async function loadNews() {
         const grid = document.getElementById('newsGrid');
-        // WP_API が設定されていない場合はサンプルを表示
-        if (WP_API.includes('YOUR-WORDPRESS')) {
-            grid.innerHTML = renderSampleNews();
-            return;
-        }
         try {
-            const url = `${WP_API}/posts?categories=${WP_CAT_NEWS}&per_page=6&_fields=id,title,date,link,meta&orderby=date&order=desc`;
-            const res = await fetch(url);
-            if (!res.ok) throw new Error('API Error');
-            const posts = await res.json();
-            if (!posts.length) { grid.innerHTML = renderSampleNews(); return; }
-            grid.innerHTML = posts.map(p => `
+            const res = await fetch(NEWS_JSON + '?_=' + Date.now());
+            if (!res.ok) throw new Error('fetch failed');
+            const data = await res.json();
+            const items = (data.items || []).slice(0, 6);
+            if (!items.length) { grid.innerHTML = renderSampleNews(); return; }
+            grid.innerHTML = items.map(item => `
                 <div class="news-card fade-up">
-                    ${sourceBadge(getMeta(p, 'source_site', 'city'))}
-                    <div class="news-date">${fmtDate(p.date)}</div>
+                    ${sourceBadge(item.source)}
+                    <div class="news-date">${fmtDate(item.date)}</div>
                     <div class="news-card-title">
-                        <a href="${getMeta(p, 'source_url', p.link)}" target="_blank" rel="noopener">
-                            ${p.title.rendered}
-                        </a>
+                        <a href="${item.url}" target="_blank" rel="noopener">${item.title}</a>
                     </div>
                 </div>
             `).join('');
@@ -1196,18 +1181,11 @@
     // ══ Load Topics ══
     let allTopics = [];
     async function loadTopics() {
-        const grid = document.getElementById('topicsGrid');
-        if (WP_API.includes('YOUR-WORDPRESS')) {
-            allTopics = getSampleTopics();
-            renderTopics('all');
-            return;
-        }
         try {
-            const cats = [WP_CAT_NEWS, WP_CAT_EVENTS, WP_CAT_SOCIAL].join(',');
-            const url = `${WP_API}/posts?categories=${cats}&per_page=6&_fields=id,title,date,excerpt,link,meta,categories&orderby=date&order=desc`;
-            const res = await fetch(url);
+            const res = await fetch(NEWS_JSON + '?_=' + Date.now());
             if (!res.ok) throw new Error();
-            allTopics = await res.json();
+            const data = await res.json();
+            allTopics = data.items || [];
             renderTopics('all');
         } catch(e) {
             allTopics = getSampleTopics();
@@ -1217,35 +1195,38 @@
 
     function getSampleTopics() {
         return [
-            { id:1, title:{rendered:'霧島神宮春まつり開催のお知らせ'}, date:'2026-03-02', excerpt:{rendered:'霧島神宮で春まつりが開催されます…'}, link:'#', meta:{source_site:'city'} },
-            { id:2, title:{rendered:'きりなびイベント：霧島アートの森 春の企画展'}, date:'2026-03-01', excerpt:{rendered:'霧島アートの森で春の企画展が始まります…'}, link:'#', meta:{source_site:'kirinavi'} },
-            { id:3, title:{rendered:'まいぷれ掲載：霧島の新しいお店がオープン'}, date:'2026-03-01', excerpt:{rendered:'霧島市内に新しいお店がオープンしました…'}, link:'#', meta:{source_site:'mypl'} },
-            { id:4, title:{rendered:'今吉直樹Facebook：キリシマビト定例会レポート'}, date:'2026-02-28', excerpt:{rendered:'先日のキリシマビト定例会の様子をお伝えします…'}, link:'#', meta:{source_site:'facebook'} },
-            { id:5, title:{rendered:'霧島市観光情報：桜の開花予想'}, date:'2026-02-27', excerpt:{rendered:'今年の霧島市の桜開花予想が発表されました…'}, link:'#', meta:{source_site:'city'} },
-            { id:6, title:{rendered:'イージーライダーハウス：次回ライブ情報'}, date:'2026-02-26', excerpt:{rendered:'今月のイベント情報をお知らせします…'}, link:'#', meta:{source_site:'instagram'} },
+            { title:'霧島神宮春まつり開催のお知らせ', date:'2026-03-02', description:'霧島神宮で春まつりが開催されます。', url:'#', source:'kirishima_city' },
+            { title:'きりなびイベント：霧島アートの森 春の企画展', date:'2026-03-01', description:'霧島アートの森で春の企画展が始まります。', url:'#', source:'kirinavi' },
+            { title:'まいぷれ掲載：霧島の新しいお店がオープン', date:'2026-03-01', description:'霧島市内に新しいお店がオープンしました。', url:'#', source:'myplace' },
+            { title:'霧島市観光情報：桜の開花予想', date:'2026-02-27', description:'今年の霧島市の桜開花予想が発表されました。', url:'#', source:'kirishima_city' },
+            { title:'きりなび：霧島の山開きイベント', date:'2026-02-26', description:'今年の山開き情報が公開されました。', url:'#', source:'kirinavi' },
+            { title:'まいぷれ：国分エリアの新スポット', date:'2026-02-25', description:'国分エリアに新しいスポットが登場しました。', url:'#', source:'myplace' },
         ];
     }
 
     function renderTopics(filter) {
         const grid = document.getElementById('topicsGrid');
+        const filterMap = {
+            'kirishima-news': ['kirishima_city'],
+            'kirinavi':       ['kirinavi'],
+            'mypl':           ['myplace'],
+            'social-post':    ['facebook', 'instagram'],
+        };
         const items = filter === 'all' ? allTopics : allTopics.filter(p => {
-            const s = getMeta(p, 'source_site', '');
-            if (filter === 'social-post') return ['facebook','instagram'].includes(s);
-            return s === filter;
+            const allowed = filterMap[filter] || [filter];
+            return allowed.includes(p.source);
         });
         if (!items.length) { grid.innerHTML = '<div class="news-loading">該当するトピックスがありません</div>'; return; }
-        grid.innerHTML = items.slice(0,6).map(p => `
+        grid.innerHTML = items.slice(0, 6).map(p => `
             <div class="topic-card">
                 <div class="topic-meta">
-                    ${sourceBadge(getMeta(p,'source_site','city'))}
+                    ${sourceBadge(p.source)}
                     <span class="topic-date">${fmtDate(p.date)}</span>
                 </div>
                 <div class="topic-title">
-                    <a href="${getMeta(p,'source_url',p.link)}" target="_blank" rel="noopener">
-                        ${p.title.rendered}
-                    </a>
+                    <a href="${p.url}" target="_blank" rel="noopener">${p.title}</a>
                 </div>
-                <div class="topic-excerpt">${p.excerpt.rendered.replace(/<[^>]+>/g,'')}</div>
+                <div class="topic-excerpt">${p.description || ''}</div>
             </div>
         `).join('');
     }
@@ -1330,22 +1311,18 @@
             { title: 'キリシマビト 3月定例会', start: '2026-03-25', url: 'kirishimabito/', source: 'キリシマビト' },
             { title: '霧島市まちづくりシンポジウム', start: '2026-04-05', url: 'https://www.city.kirishima.lg.jp/', source: '霧島市役所' },
         ];
-        if (WP_API.includes('YOUR-WORDPRESS')) {
-            initCalendar(sampleEvents);
-            renderUpcomingEvents(sampleEvents);
-            return;
-        }
         try {
-            const url = `${WP_API}/posts?categories=${WP_CAT_EVENTS}&per_page=50&_fields=id,title,date,link,meta&orderby=date&order=asc`;
-            const res = await fetch(url);
+            const res = await fetch(NEWS_JSON + '?_=' + Date.now());
             if (!res.ok) throw new Error();
-            const posts = await res.json();
-            const events = posts.map(p => ({
-                title: p.title.rendered,
-                start: getMeta(p, 'event_date', p.date),
-                url: getMeta(p, 'source_url', p.link),
-                source: getMeta(p, 'source_site', '霧島市'),
-            }));
+            const data = await res.json();
+            const events = (data.items || [])
+                .filter(item => item.category === 'events')
+                .map(item => ({
+                    title: item.title,
+                    start: item.date,
+                    url: item.url,
+                    source: item.source_name || 'きりなび',
+                }));
             initCalendar(events.length ? events : sampleEvents);
             renderUpcomingEvents(events.length ? events : sampleEvents);
         } catch(e) {
